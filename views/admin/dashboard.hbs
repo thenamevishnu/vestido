@@ -1,0 +1,122 @@
+<div class="container">
+    <div class="row text-center mt-5">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div class="dashboard-border products-block-color p-4">
+                <h5><i class="fa fa-truck"></i> PRODUCTS</h5>
+                <div class="fw-bold fs-3">{{data.productCount}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div class="dashboard-border ordered-block-color p-4">
+                <h5><i class="fa fa-check-circle"></i> ORDERED</h5>
+                <div class="fw-bold fs-3">{{data.orderCount}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div class="dashboard-border cancelled-block-color p-4">
+                <h5><i class="fa fa-ban"></i> CANCELLED</h5>
+                <div class="fw-bold fs-3">{{data.cancelled}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div class="dashboard-border pending-block-color p-4">
+                <h5><i class="fa fa-clock-o"></i> PENDING</h5>
+                <div class="fw-bold fs-3">{{data.pending}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div class="dashboard-border returned-block-color p-4">
+                <h5><i class="fa fa-rotate-right"></i> RETURNED</h5>
+                <div class="fw-bold fs-3">{{data.returned}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div class="dashboard-border profit-block-color p-4">
+                <h5><i class="fa fa-users"></i> TOTAL USERS</h5>
+                <div class="fw-bold fs-3">{{data.totalUsers}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-3 mb-3">
+            <div class="dashboard-border profit-block-color p-4">
+                <h5><i class="fa fa-rupee"></i> TOTAL PROFIT</h5>
+                <div class="fw-bold fs-3">₹{{data.totalProfit}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-3 mb-3">
+            <div class="dashboard-border profit-block-color p-4">
+                <h5><i class="fa fa-rupee"></i> TOTAL REVENUE</h5>
+                <div class="fw-bold fs-3">₹{{data.totalRevenue}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mt-3">
+    <div id="myChart" class="d-flex justify-content-center" style="width:100%; height:50vh;"></div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    window.onresize = drawChart;
+google.charts.load("current", {"packages":["corechart"]});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    $.get("/admins/chartData",function(response){
+        console.log(response)
+        let obj = [["MONTH", "PROFIT" , "REVENUE"]]
+        let month = ["JAN","FEB","MAR","APR","MAY","JUNE","JUL","AUG","SEP","OCT","NOV","DEC"]
+        response.forEach(async (value)=>{
+            let array = [month[(value._id)-1],value.grandTotal*1/5,value.grandTotal]
+            await obj.push(array)
+        })
+        var data = google.visualization.arrayToDataTable(obj);
+
+var options = {
+    colors:["green","blue"],
+    chartArea: {
+      left: 50,
+      top: 10,
+      width: '100%',
+      height: '70%'
+    },
+    bar: {
+      groupWidth: '80%'
+    },
+    hAxis: {
+      textStyle: {
+        fontSize: 11
+      }
+    },
+    vAxis: {
+      minValue: 0,
+      maxValue: 1500,
+      baselineColor: '#DDD',
+      gridlines: {
+        color: '#DDD',
+        count: 4
+      },
+      textStyle: {
+        fontSize: 11
+      }
+    },
+    legend: {
+      position: 'bottom',
+      textStyle: {
+        fontSize: 12
+      }
+    },
+    animation: {
+      duration: 1200,
+      easing: 'out',
+			startup: true
+    }
+  };
+
+var chart = new google.visualization.ColumnChart(document.getElementById("myChart"));
+  chart.draw(data, options);
+    })
+}
+</script>
+</div>

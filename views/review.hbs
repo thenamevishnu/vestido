@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+
+        <div class="col-12 col-md-6">
+            <div class="mx-auto d-flex justify-content-center set-w-h overflow">
+                <img class="curved-border img-fluid" id="product-image" src="/images/products/{{products.thumb}}">
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 mt-4 mt-md-0">
+
+            <div class="mt-1 mt-md-5">
+                
+                {{#if status}}
+                    <div class="fs-5 fw-bold">
+                        RATING : <span class="text-muted cursor-pointer">
+                            <span onclick="rating(1,'{{products._id}}')" class="review-star"><i class="far fa-star fs-3"></i></span>
+                            <span onclick="rating(2,'{{products._id}}')" class="review-star"><i class="far fa-star fs-3"></i></span>
+                            <span onclick="rating(3,'{{products._id}}')" class="review-star"><i class="far fa-star fs-3"></i></span>
+                            <span onclick="rating(4,'{{products._id}}')" class="review-star"><i class="far fa-star fs-3"></i></span>
+                            <span onclick="rating(5,'{{products._id}}')" class="review-star"><i class="far fa-star fs-3"></i></span>
+                            <input type="hidden" name="reviewvalid" id="review-valid" value="0">
+                        </font>
+                    </div>
+                    <div>
+                        <form name="frm" id="review" oninput="formChanged()" onsubmit="return reviewForm('{{products._id}}')" method="post" action="">
+                            <div class="mt-5">
+                                <label for="review" class="d-block fs-5 fw-bold mb-3">WRITE YOUR REVIEW : </label>
+                                <textarea type="text" id="review-post" placeholder="Enter your review note" name="review" rows="6"></textarea>
+                            <div><i class="text-danger remove-err"></i></div>
+                            </div>
+                            <div>
+                                <button class="excel-download mt-3" ><i class="fa fa-paper-plane"></i> POST NOW</button>
+                            </div>
+                        </form>
+                    </div>
+                {{else}}
+                   <div class="text-center pt-5">
+                        <div class="mb-3">
+                            <img src="/images/not-purchased.png" alt="Not Purchased!">
+                        </div>
+                        <div class="mb-3">
+                            <h4>Haven't purchased this product?</h4>
+                        </div>
+                        <div>
+                            <i>Sorry! You are not allowed to review this product since you haven't bought it on VESTIDO.</i>
+                        </div>
+                   </div>
+                {{/if}}
+                       
+            </div>
+        </div>
+
+            </div>
+        </div>

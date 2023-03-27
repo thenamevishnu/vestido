@@ -1,0 +1,51 @@
+<div class="container">
+  {{#if items}}
+    <table class="table table-hover table-fluid usermanage border border-1 text-md-center text-start">
+  <thead>
+    <tr>
+      <th>PHOTO</th>
+      <th>TITLE</th>
+      <th>SIZE</th>
+      <th>PRICE</th>
+      <th>ADD TO CART</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each items}}        
+        {{#each product_details}}
+            <tr>
+            
+            <td><img width="100px" src="/images/products/{{thumb}}"></td>
+            
+            <td><a href="/product_details/{{../product_id}}" class="text-decoration-none text-dark">{{title}}</a></td>
+            
+            <td>{{../size}}</td>
+           
+            <td>₹{{price}}</td>
+            
+            <td><a onclick="return confirm('Are you sure to add {{title}} to your cart ?')" href="/toCart/{{../product_id}}/{{../size}}" role="button" class="btn btn-primary"><i class="fa fa-cart-plus" title="add to cart item"></i></a></td>
+            
+            <td>
+                <a onclick="return confirm('Are you sure to remove {{title}} ?')" href="/remove_wishlist/{{../product_id}}/{{../size}}" role="button" class="btn btn-danger"><i class="fa fa-close" title="Remove item"></i></a>
+            </td>
+        </tr> 
+        {{/each}}
+    {{/each}}
+  </tbody>
+</table>
+<div class="text-danger text-center">{{err}}</div>
+{{else}}
+  <div class="mx-auto text-center">
+            <img src="/images/empty-wishlist.svg">
+            <div class="theme-color fw-bold">
+                <p>
+                    Your wishlist is empty!
+                </p>
+                <p class="fw-normal text-danger">
+                    <i>Look like you have not added anything to your wishlist, go ahead &amp; explore</i> <a href="/shop" class="animate-in-cart" style="text-decoration: none;"><i class="fa fa-arrow-circle-right text-danger"></i></a>
+                </p>
+            </div>
+        </div>
+{{/if}}
+</div>

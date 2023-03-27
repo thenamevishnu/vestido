@@ -1,0 +1,84 @@
+{{#if user_header}}
+{{else}}
+  {{#if shop}}
+  <div class="d-flex justify-content-center mt-3">
+        <img width="150vh" src="/images/VESTIDO.png"  onclick="location.href='/'" class="cursor-pointer">
+      </div>
+  {{/if}}
+  <nav class="navbar navbar-expand-md navbar-white bg-white mt-3">
+    <div class="container-fluid">
+      {{#if shop}}
+      <div>
+        <input class="search-form" type="search" placeholder="Search" id="search-box" onkeyup="sendData(this)"><i class="fa fa-search ms-2"></i>
+      <section id="search-data" class="z-index search-result"></section>
+      </div>
+      
+        {{else}}
+      <div class="d-flex ms-3">
+        <img width="150vh" src="/images/VESTIDO.png"  onclick="location.href='/'" class="cursor-pointer">
+      </div>
+  {{/if}}
+      <button class="d-flex d-md-none menu-button" type="button" data-bs-toggle="collapse" onclick="openNav()">
+        <span class="navbar-toggler-icon menu-icon fs-2 theme-color"><i class="fa fa-bars"></i></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <span class="navbar-nav me-auto mb-2 mb-lg-0">
+        </span>
+          <div class="d-none d-md-inline me-3">
+    
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="list-inline-item position-relative fa-hover">
+            <a class="theme-color fs-4 me-4 fa-hover"  href="/wishlist"><i class="fa fa-heart "></i></a><span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary size-of-badge">
+  {{cwcount.wish}}
+  <span class="visually-hidden">unread messages</span>
+  </span>
+        </li>
+        <li class="list-inline-item position-relative fa-hover">
+            <a class="theme-color fs-4 me-4 fa-hover"  href="/cart"><i class="fa fa-shopping-cart"></i></a><span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary size-of-badge">
+  {{cwcount.cart}}
+  <span class="visually-hidden">unread messages</span>
+  </span>
+        </li>
+                  <li class="nav-item">
+                      <a class="theme-color fs-4 fa-hover"  href="/profile"><i class="fa fa-user "></i></a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+    </div>
+  </nav>
+
+    <ul class="d-md-flex list-inline mx-auto justify-content-evenly d-none head-list">
+      <li class="list-inline-item text-decoration-none"><a href="/">HOME</a></li>
+      <li class="list-inline-item"><a href="/about">ABOUT</a></li>
+      <li class="list-inline-item"><a href="/shop">SHOP</a></li>
+      <li class="list-inline-item"><a href="/shop#categories">CATEGORY</a></li>
+      <li class="list-inline-item"><a href="/contact">CONTACT</a></li>
+    </ul>
+
+  <div id="sidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/" class="link"><i class="fa fa-home"></i> HOME</a>
+    <a href="/about" class="link"><i class="fa fa-address-card"></i> ABOUT</a>
+    <a href="/shop" class="link"><i class="fa fa-store"></i> SHOP</a>
+    <a href="/shop#categories" class="link"><i class="fa fa-sitemap"></i> CATEGORY</a>
+    <a href="/contact" class="link"><i class="fa fa-phone"></i> CONTACT</a>
+    <ul class="list-inline mt-3">
+        <li class="list-inline-item position-relative fa-hover">
+            <a class="theme-color fs-5 fa-hover"  href="/wishlist"><i class="fa fa-heart "></i></a><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary size-of-badge">
+  {{cwcount.wish}}
+  <span class="visually-hidden">unread messages</span>
+  </span>
+        </li>
+        <li class="list-inline-item position-relative fa-hover">
+            <a class="theme-color fs-5 fa-hover"  href="/cart"><i class="fa fa-shopping-cart"></i></a><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary size-of-badge">
+  {{cwcount.cart}}
+  <span class="visually-hidden">unread messages</span>
+  </span>
+        </li>
+        <li class="list-inline-item fa-hover">
+            <a class="theme-color fs-5 fa-hover"  href="/profile"><i class="fa fa-user"></i></a>
+        </li>
+    </ul>
+  </div>
+{{/if}}

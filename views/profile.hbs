@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="row mx-auto text-center d-flex justify-content-center gap-4 gap-md-2 p-2">
+        <div class="col-12 col-lg-5 p-3 profile-border border-radius-10 shadow">
+            <div class="border border-1 p-4 d-flex justify-content-center align-items-center border-radius-20">
+                {{#eq profile.gender "Male"}}
+                    <img width="60px" src="/images/male-avatar.png" class="cursor-pointer">
+                {{/eq}}
+                {{#eq profile.gender "Female"}}
+                    <img width="60px" src="/images/female-avatar.png" class="cursor-pointer">
+                {{/eq}}
+                {{#eq profile.gender "not-prefered"}}
+                    <img width="60px" src="/images/not-prefered-avatar.png" class="cursor-pointer">
+                {{/eq}}
+                {{#eq profile.gender "Others"}}
+                    <img width="60px" src="/images/not-prefered-avatar.png" class="cursor-pointer">
+                {{/eq}}
+                <div>
+                    <div class="fs-5">{{profile.first_name}} {{profile.last_name}}</div>
+                    <div class="text-muted text-start"><small>@{{profile.username}}</small></div>
+                </div>
+            </div>
+            <div class="border border-radius-10 p-2 mt-3 cursor-pointer">
+                <span class="theme-color fw-bold"><i class="fa fa-wallet theme-color"></i> Wallet : {{#lte balance 50}} {{profile.balance}} {{else}} {{profile.balance}} {{/lte}}</span>
+            </div>
+            <div class="profile-selected border-radius-10 p-2 mt-3 cursor-pointer" onclick="window.scrollTo(0,document.body.scrollHeight)">
+                <span class="theme-color"><i class="fa fa-info-circle"></i> Personal Information</span>
+            </div>
+            <a href="/my_orders" class="text-decoration-none">
+                <div class="background-theme border-radius-10 p-2 mt-2 profile-hover">
+                    <span class="theme-color"><i class="fa fa-truck"></i> My Orders</span>
+                </div>
+            </a>
+            <a href="/wishlist" class="text-decoration-none">
+                <div class="background-theme border-radius-10 p-2 mt-2 profile-hover">
+                    <span class="theme-color"><i class="fa fa-heart"></i> My Wishlist</span>
+                </div>
+            </a>
+            <a href="/cart" class="text-decoration-none">
+                <div class="background-theme border-radius-10 p-2 mt-2 profile-hover">
+                    <span class="theme-color"><i class="fa fa-shopping-cart"></i> My Cart</span>
+                </div>
+            </a>
+            <a href="/change_password" class="text-decoration-none">
+                <div class="background-theme border-radius-10 p-2 mt-2 profile-hover">
+                    <span class="theme-color"><i class="fa fa-key"></i> Change Password</span>
+                </div>
+            </a>
+            <a href="/logout" class="text-decoration-none">
+                <div class="background-theme border-radius-10 p-2 mt-5 profile-hover">
+                    <span class="theme-color"><i class="fa fa-sign-out-alt"></i> Logout</span>
+                </div>
+            </a>
+        </div>
+
+{{!-- Personal info --}}
+
+        <div class="col-12 col-lg-5 d-flex justify-content-center align-items-center shadow profile-border border-radius-10">
+            <div class="profile-list" id="personal-info">
+                <form name="frm" oninput="profileForm()" onsubmit="return ProfileValidate()" method="post" action="/profile" id="profile-form">
+                    <input type="text" id="first_name" name="first_name" value="{{profile.first_name}}" disabled  class="profile-disabled-input">
+                    <span class="text-danger"></span>
+                    <input type="text" id="last_name" name="last_name" value="{{profile.last_name}}" disabled  class="profile-disabled-input"> 
+                    <span class="text-danger"></span>
+                    <input type="text" id="username" name="username" value="{{profile.username}}" disabled  class="profile-disabled-input"> 
+                    <input type="text" id="email" name="email" value="{{profile.email}}" disabled  class="profile-disabled-input">
+                    <input type="text" id="phone" name="phone" value="{{profile.phone}}" disabled  class="profile-disabled-input"> 
+                    <select id="gender" name="gender" disabled  class="profile-disabled-input">
+                    <option value="not-prefered" {{#eq profile.gender "not-prefered"}} selected {{/eq}}>Not Prefered</option>
+                    <option value="Male" {{#eq profile.gender "Male"}} selected {{/eq}}>Male</option>
+                    <option value="Female" {{#eq profile.gender "Female"}} selected {{/eq}}>Female</option>
+                    <option value="Others" {{#eq profile.gender "Others"}} selected {{/eq}}>Others</option>
+                    </select>
+                    <button type="submit" class="profile-button mt-5 mb-3 mx-auto text-center" id="profile-save" style="display:none;"><i class="fa fa-save"></i> Save</button>
+                </form>
+                    <button type="button" class="profile-button mt-5 mb-3" id="profile-edit" onclick="changeProfileButton()"><i class="fa fa-edit"></i> Update</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

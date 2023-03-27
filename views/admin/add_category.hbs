@@ -1,0 +1,17 @@
+<div class="signup-form">
+    <form name="frm" oninput="formChanged()" onsubmit="return categoryValidation()" action="/admins/add_category" method="post" class="w-all mx-auto">
+        <div class="form-floating mb-4 mt-3">
+            <input type="text" class="form-control" id="category" placeholder="category" name="category" value="{{data.category}}">
+            <label for="email">Category</label>
+            <div><i class="text-danger remove-err">{{err.category}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="sub_category" placeholder="sub_category" name="sub_category" value="{{data.sub_category}}">
+            <label for="password">Sub Category</label>
+            <div><i class="text-danger remove-err">{{err.sub_category}}</i></div>
+        </div>
+        <div class="mx-auto text-center mt-3">
+            <button type="submit" class="btn btn-primary btn-bg"><i class="fa fa-plus"></i> Add Category</button>
+        </div>
+    </form>
+</div>

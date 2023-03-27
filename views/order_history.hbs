@@ -1,0 +1,77 @@
+<div class="container mt-5 mt-md-2">
+  {{#if data}}
+    {{#each data}}
+        {{#each orders}}
+            <div class="row mt-2 mt-md-0 history-hover border-radius-10 p-2 mb-3">      
+            <div class="col-12 col-md-2 text-center text-md-start mx-auto" style="width:10rem;">
+                <img src="/images/products/{{orders.image}}" class="card-img-top" alt="{{orders.title}}">
+            </div>
+            <div class="col-12 col-md-6 theme-color position-relative mt-4">
+                {{#eq orders.status "Cancelled"}}
+                {{else}} 
+                {{#eq orders.status "Confirmed"}} <div class="text-success fw-bold mb-1">Delivered <i class="fa fa-check"></i></div> 
+                {{else}}
+                 {{#eq orders.status "Returned"}}
+                 <div class="text-danger fw-bold mb-1">Order Returned</div> 
+                 {{else}}
+                 <div class="text-success fw-bold mb-1">Delivery Expected By {{#arrive orders.arrive}} {{orders.arrive}} {{/arrive}}</div> 
+                 {{/eq}}
+                {{/eq}}
+                {{/eq}}
+                <div class="fw-bold">{{orders.title}} x {{orders.quantity}}</div>
+                <div class="fw-bold fs-4">₹{{orders.price}}</div>
+                <div class="mt-3 fw-bold mb-3">
+                    {{#eq orders.status "Pending"}} <a href="/cancel-order/{{orders.id}}" class="text-decoration-none text-danger"><i class="fa fa-close"></i> Cancel Order{{/eq}}
+                    {{#eq orders.status "Shipped"}} <img width="100px" src="/images/Shipped.png" alt="Product Shipped!"> {{/eq}}
+                    {{#eq orders.status "Reached"}} <img width="100px" src="/images/Reached.png" alt="Product Reached!"> {{/eq}}
+                    {{#eq orders.status "Cancelled"}} <img width="100px" src="/images/cancelled.png" alt="Product Cancelled!"> {{/eq}}
+                    {{#eq orders.status "Returned"}} <img width="100px" src="/images/Returned.png" alt="Product Cancelled!"> {{/eq}}
+                    {{#eq orders.status "Confirmed"}} <img width="100px" src="/images/confirmed.png" alt="Product Delivered!"> <span class="reason text-decoration-none text-danger ms-3 cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal" id="returnOrder" style="display:none;">Reason ?</span> <span class="text-decoration-none text-secondary ms-3 cursor-pointer" onclick="returnOrder('{{orders.id}}')" id="returnOrder1">Return ?</span></button>{{/eq}}
+                    </a></div>
+            </div>
+            <div class="col-12 col-md-3 theme-color position-relative mt-4">
+                <div class="text-primary fw-bold fst-italic mb-3">Odered On {{#ordered orders.date}} date {{/ordered}}</div>
+                <div class="text-muted fw-bold fst-italic">Order Total : ₹{{orders.grandTotal}}</div>
+                {{#eq orders.status "Cancelled"}}{{else}}
+                {{#eq orders.status "Returned"}}{{else}}<div class="text-center mt-4">
+                    <button class="p-2 invoice" onclick="location.href='/download-invoice/{{orders.order_hash}}'"><i class="fa fa-download"></i> Order Invoice</button>
+                </div>{{/eq}}{{/eq}}
+            </div>
+
+            
+        </div>
+        {{/each}}
+    {{/each}}
+    {{else}}
+    <div class="text-center max-auto">
+      <img class="img-fluid" src="/images/no_orders.png" alt="No orders found!">
+      <div class="theme-color fw-bold fst-italic mt-3">Your Order List Is Empty!</div>
+    </div>
+      
+    {{/if}}
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Return Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form name="frm" oninput="formChanged()" onsubmit="return returnForm()" action="/return-order" method="post">
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Reason :</label>
+            <textarea class="form-control" id="message-text" name="reason"></textarea>
+          </div>
+          <div class="text-danger remove-err"></div>
+          <input type="hidden" name="order_id" id="order_id">
+          <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="return_order">DONE</button>
+      </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>

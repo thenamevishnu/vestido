@@ -1,0 +1,18 @@
+<div class="signup-form">
+    <form name="frm" oninput="formChanged()" onsubmit="return adminLogin()" action="/admins/login" method="post" class="w-all mx-auto">
+        <h2 class="text-center fw-bold fs-2">ADMIN LOGIN</h2>
+        <div class="form-floating mb-4 mt-3">
+            <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{adminData.email}}">
+            <label for="email">Email</label>
+            <div><i class="text-danger remove-err">{{err.email}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="{{adminData.password}}">
+            <label for="password">Password</label>
+            <div><i class="text-danger remove-err">{{err.password}}</i></div>
+        </div>
+        <div class="mx-auto text-center mt-3">
+            <button type="submit" class="btn btn-primary btn-bg">Login</button>
+        </div>
+    </form>
+</div>

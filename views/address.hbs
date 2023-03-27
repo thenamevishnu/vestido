@@ -1,0 +1,24 @@
+<div class="container-fluid mt-3 mt-md-5 address-card">
+    <div class="row d-flex justify-content-center gap-3 gap-md-0">
+  {{#if address}}
+    {{#each address}}
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+            <div class="card position-relative">
+                <a href="/remove-address/{{id}}" class="text-decoration-none text-danger"><span title="Remove address"><i class="fa fa-close close-address"></i></span></a>
+            <div class="card-body">
+                <h5 class="card-title fs-4">{{first_name}} {{last_name}}</h5>
+                <p class="card-text">Address : <span>{{address}} , PIN: {{zip}}</span><br>
+                Country/state : <span>{{country}} / {{state}}</span><br>
+                Email : <span>{{email}}</span><br>
+                Phone : <span>{{phone}}</span></p>
+                <div class="mx-auto text-center">
+                    <a href="/address-select/{{@index}}" role="button" class="btn btn-sm btn-outline-secondary" title="Use this address">Use</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    {{/each}}
+  {{/if}}
+</div>
+</div>
+   

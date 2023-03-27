@@ -1,0 +1,52 @@
+<div class="signup-form">
+<form name="frm" oninput="formChanged()" onsubmit="return signupValidate()" action="/signup" method="post" class="w-all mx-auto">
+        <h2 class="text-center fw-bold fs-2">REGISTER</h2>
+            <div class="form-floating mb-4 mt-3">
+                <input type="text" class="form-control" id="first_name" placeholder="first_name" name="first_name" value="{{userData.first_name}}">
+                <label for="first_name">First Name</label><div><i class="text-danger remove-err">{{err.first_name}}</i></div>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="last_name" placeholder="last_name" name="last_name" value="{{userData.last_name}}">
+                <label for="last_name">Last Name</label><div><i class="text-danger remove-err">{{err.last_name}}</i></div>
+            </div>
+            
+            <div class="form-floating mb-4 mt-3">
+                <input type="text" class="form-control" id="username" placeholder="username" name="username" value="{{userData.username}}">
+                <label for="username">UserName</label><div><i class="text-danger remove-err">{{err.username}}</i></div>
+            </div>
+            
+            <div class="form-floating mb-4 mt-3">
+                <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{userData.email}}">
+                <label for="email">Email</label><div><i class="text-danger remove-err">{{err.email}}</i></div>
+            </div>
+            
+            <div class="form-floating mb-4 mt-3">
+                <input type="number" class="form-control" id="phone" placeholder="phone" name="phone" value="{{userData.phone}}">
+                <label for="phone">Phone</label> <div><i class="text-danger remove-err">{{err.phone}}</i></div>
+            </div>
+           
+            <div class="form-floating mb-4 mt-3">
+                <input type="password" class="form-control" id="password" placeholder="password" name="password" value="{{userData.password}}">
+                <label for="password">Password</label><div><i class="text-danger remove-err">{{err.password}}</i></div>
+            </div>
+            
+            <div class="form-floating mb-4 mt-3">
+                <input type="password" class="form-control" id="confirm_password" placeholder="confirm_password" name="confirm_password" value="{{userData.confirm_password}}">
+                <label for="confirm_password">Confirm Password</label><div><i class="text-danger remove-err">{{err.confirm_password}}</i></div>
+            </div>
+
+            <div class="form-floating mb-4 mt-3" style="display: none;" id="otp-box">
+                <input type="text" class="form-control" id="otp" placeholder="otp" name="otp" value="{{userData.otp}}">
+                <label for="otp">Enter OTP</label><div><i class="text-danger remove-err">{{err.otp}}</i></div>
+            </div>
+            
+            <div class="mx-auto text-center mt-3">
+                <button type="submit" class="btn btn-primary btn-bg">SignUp</button>
+            </div>
+            <div class="text-center mt-3">Already a member ? <a href="/login" class="text-decoration-none">Login Now</a>
+            </div>
+            </div>
+<form>
+   
+</div>

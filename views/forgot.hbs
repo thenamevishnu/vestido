@@ -1,0 +1,20 @@
+<div class="signup-form">
+    <form name="frm" oninput="formChanged()" action="/forgot_password" method="post" class="w-all mx-auto">
+        <h2 class="text-center fw-bold fs-3 mb-5">FORGOT PASSWORD</h2>
+            <div class="form-floating mb-4 mt-3">
+                <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{userData.email}}">
+                <label for="email">Email</label><div><i class="text-danger remove-err" id="show-err">{{err.email}}</i></div>
+            </div>
+            <div class="form-floating mb-3" id="otp-input" style="display:none;">
+                <input type="text" class="form-control" id="otp" placeholder="otp" name="otp" value="{{userData.otp}}">
+                <label for="p">otp</label><div><i class="text-danger remove-err">{{err.otp}}</i></div>
+            </div>
+            <div class="mx-auto text-center mt-3" style="display:none;" id="done">
+                <button type="button" class="btn btn-primary btn-bg" onclick="validateOtp()">DONE</button>
+            </div>
+            <div class="mx-auto text-center mt-3" id="sendotp">
+                <button type="button" class="btn btn-primary btn-bg" onclick="sendOtp()">SEND OTP</button>
+            </div>
+        </div>
+    </form>
+</div>

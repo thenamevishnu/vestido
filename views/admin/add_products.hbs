@@ -1,0 +1,65 @@
+<div class="signup-form">
+    <form name="frm" oninput="formChanged()" onsubmit="return addProductValidation()" action="/admins/add_products" method="post" enctype="multipart/form-data" class="w-all mx-auto">
+        <div class="form-floating mb-4 mt-3">
+            <input type="text" class="form-control" id="title" placeholder="title" name="title" value="{{data.title}}">
+            <label for="title">Title</label>
+            <div><i class="text-danger remove-err">{{err.title}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="price" placeholder="price" name="price" value="{{data.price}}">
+            <label for="price">Price</label>
+            <div><i class="text-danger remove-err">{{err.price}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="brand" placeholder="brand" name="brand" value="{{data.brand}}">
+            <label for="brand">Brand</label>
+            <div><i class="text-danger remove-err">{{err.brand}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-select" name="category" id="category">
+                <option value="0">Select a category</option>
+                {{#each category}}
+                    <option value="{{category}}">{{category}}</option>
+                {{/each}}
+            </select>
+            <label for="category">Category</label>
+            <div><i class="text-danger remove-err">{{err.category}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-select" name="sub_category" id="sub_category">
+                <option value="0">Select a sub category</option>
+                {{#each category}}
+                    {{#each sub_category}}
+                        <option value="{{[]}}">{{[]}}</option>
+                    {{/each}}
+                {{/each}}
+            </select>
+            <label for="sub_category">Sub Category</label>
+            <div><i class="text-danger remove-err">{{err.sub_category}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="stocks" placeholder="stocks" name="stocks" value="{{data.stocks}}">
+            <label for="stocks">Stocks</label>
+            <div><i class="text-danger remove-err">{{err.stocks}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="description" placeholder="description" name="description">{{data.description}}</textarea>
+            <label for="description">Description</label>
+            <div><i class="text-danger remove-err">{{err.description}}</i></div>
+        </div>
+        <div class="mb-3 ms-3">
+            <div><input type="checkbox" id="size_sm" name="size_sm" {{#if data.size_sm}} checked {{/if}}>  SMALL</div>
+                <div><input type="checkbox" id="size_md" name="size_md" {{#if data.size_md}} checked {{/if}}> MEDUIM</div>
+                    <div><input type="checkbox" id="size_lg" name="size_lg" {{#if data.size_lg}} checked {{/if}}> LARGE</div>
+                        <div><input type="checkbox" id="size_xl" name="size_xl" {{#if data.size_xl}} checked {{/if}}> XL</div>
+                            <div><input type="checkbox" id="size_xxl" name="size_xxl" {{#if data.size_xxl}} checked {{/if}}> XXL</div>
+        <div><i class="text-danger remove-err">{{err.size}}</i></div>
+        </div>
+        <input type="file" class="choose-file" id="file" placeholder="file" name="file" value="{{data.file}}" multiple>
+        <div><i class="text-danger remove-err">{{err.file}}</i></div>
+        </div>
+        <div class="mx-auto text-center mt-5">
+            <button type="submit" class="btn btn-primary btn-bg"><i class="fa fa-plus"></i> ADD ITEM</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="mt-3 d-flex float-end mb-3">
+        <button class="excel-download me-2" onclick="location.href='/admins/add-coupon'"><i class="fa fa-plus"></i> ADD COUPON</button>
+    </div>
+    <table class="table table-hover table-fluid usermanage border border-1">
+  <thead>
+    <tr>
+      <th>CODE</th>
+      <th>MIN. AMOUNT</th>
+      <th>MAX. DISCOUNT</th>
+      <th>STOCKS</th>
+      <th>FROM</th>
+      <th>TO</th>
+      <th>STATUS</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each coupons}}        
+        <tr>
+            <td><span class="for-md fw-bold">CODE</span>{{code}} - {{discount}}%</td>
+            <td><span class="for-md fw-bold">MIN. AMOUNT</span>₹{{min_purchase}}</td>
+            <td><span class="for-md fw-bold">MAX. DISCOUNT</span>₹{{max_discount}}</td>
+            <td><span class="for-md fw-bold">STOCKS</span>{{remaining}}/{{stocks}}</td>
+            <td><span class="for-md fw-bold">FROM</span>{{#date from}} {{from}} {{/date}}</td>
+            <td><span class="for-md fw-bold">TO</span>{{#date to}} {{to}} {{/date}}</td>
+            <td><span class="for-md fw-bold">STATUS</span>
+            {{#eq status "enabled"}}<span class="text-success">Enabled</span>{{/eq}}
+            {{#eq status "disabled"}}<span class="text-warning">Disabled</span>{{/eq}}
+            {{#eq status "pending"}}<span class="text-secondary">Pending</span>{{/eq}}
+            {{#eq status "expired"}}<span class="text-danger">Expired</span>{{/eq}}
+            </td>
+            <td>
+              <span class="for-md fw-bold">ACTION</span>  <a href="/admins/edit-coupon/{{_id}}" class="text-decoration-none text-primary me-3"><i class="fa fa-edit fs-4" title="edit coupon" ></i></a> 
+              {{#eq status "enabled"}} <a href="/admins/disable-coupon/{{_id}}" class="text-decoration-none text-danger"><i class="fa fa-lock fs-4" title="disable coupon" ></i></a> {{/eq}}
+              {{#eq status "disabled"}} <a href="/admins/enable-coupon/{{_id}}" class="text-decoration-none text-success"><i class="fa fa-unlock fs-4" title="enable coupon" ></i></a> {{/eq}}
+              <a href="/admins/delete-coupon/{{_id}}" class="text-decoration-none text-danger ms-3"><i class="fa fa-trash fs-4" title="delete coupon" ></i></a>
+            </td>
+        </tr> 
+    {{/each}}
+  </tbody>
+</table>
+</div>
+

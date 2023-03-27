@@ -1,0 +1,84 @@
+<div class="container">
+    {{#if items}}
+
+    <table class="table table-hover table-fluid usermanage border border-1 ">
+  <thead>
+    <tr>
+      <th>PHOTO</th>
+      <th>TITLE</th>
+      <th>SIZE</th>
+      <th>PRICE</th>
+      <th>QUANTITY</th>
+      <th>TOTAL</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each items}}        
+        {{#each product_details}}
+            <tr>
+            
+            <td><span class="for-md fw-bold">PHOTO</span> <img width="100px" src="/images/products/{{thumb}}"></td>
+            
+            <td><span class="for-md fw-bold">TITLE</span> <a href="/product_details/{{../product_id}}" class="text-decoration-none text-dark">{{title}}</a></td>
+            
+            <td><span class="for-md fw-bold">SIZE</span> {{../size}}</td>
+            
+            <td><span class="for-md fw-bold">PRIZE</span> ₹{{price}}</td>
+           
+            <td><span class="for-md fw-bold">QUANTITY</span> <button class="counter" onclick="counterMinus('{{../product_id}}','{{../size}}','{{price}}','{{@../index}}')" id="{{../product_id}}{{../size}}M"><i class="fa fa-minus"></i></button>&nbsp;&nbsp;<span id="{{../product_id}}{{../size}}showcount" class="fs-5 text-secondary fw-bold">{{../qty}}</span>&nbsp;&nbsp;<input type="hidden" id="{{../product_id}}{{../size}}qty" value="{{../qty}}" name="qty"><button class="counter" onclick="counterPlus('{{../product_id}}','{{../size}}','{{price}}','{{@../index}}')" id="{{../product_id}}{{../size}}P"><i class="fa fa-plus"></i></button><span class="ms-3" id="error-show"></span></td>
+            
+            <td><span class="for-md fw-bold">TOTAL</span> ₹<span id="{{../product_id}}{{../size}}{{price}}total" class="get-all-prices">{{../total}}</span></td>
+           
+            <td><span class="for-md fw-bold">ACTION</span>
+                <a onclick="return confirm('Are you sure to remove {{title}} ?')" href="/remove_cart/{{../product_id}}/{{../size}}" role="button" class="btn btn-danger"><i class="fa fa-close" title="Remove item"></i></a>
+            </td>
+        </tr> 
+        {{/each}}
+    {{/each}}
+  </tbody>
+</table>
+</div>
+<div class="text-danger text-center" id="no-qty">{{cart_err}}</div>
+
+<div class="container mt-5 ">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div>
+                <a href="/shop" role="button" class="btn btn-outline-primary">CONTINUE SHOPPING</a>
+            </div>
+            <div class="d-flex justify-content-center">
+                <img width="45%" src="https://www.pointstar-consulting.com/wp-content/uploads/2023/01/shopping-cart.gif">
+            </div>
+        </div>
+
+<div class="col-12 col-md-6 mt-5 mt-md-0">
+    <h5 class="ms-3">CART TOTALS</h5>
+    <div class="border-top border-1 mx-auto text-center mt-3">
+        <div class="ms-3 p-3 d-flex justify-content-between">
+        <div>Subtotal : </div>
+        <div>₹<span id="grandTotal1">{{grandTotal}}</span></div>
+    </div>
+    <div class="ms-3 p-3 d-flex justify-content-between">
+        <div>Total : </div>
+        <div>₹<span id="grandTotal2">{{grandTotal}}</span></div>
+    </div>
+    {{#if items}}<a href="/checkout" role="button" class="btn btn-primary mt-4">PROCEED TO CHECKOUT</a>{{/if}}
+</div> 
+</div>
+
+    </div>
+    {{else}}
+        <div class="mx-auto text-center">
+            <img class="img-fluid" src="/images/6a7fbadba54f099e51e634281956fae0-removebg-preview.png">
+            <div class="theme-color fw-bold">
+                <p>
+                    Your cart is empty!
+                </p>
+                <p class="fw-normal text-danger">
+                    <i>Look like you have not added anything to your cart, go ahead &amp; explore</i> <a href="/shop" class="animate-in-cart" style="text-decoration: none;"><i class="fa fa-arrow-circle-right text-danger"></i></a>
+                </p>
+            </div>
+        </div>
+    {{/if}}
+</div>

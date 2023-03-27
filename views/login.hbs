@@ -1,0 +1,23 @@
+<div class="signup-form">
+      <form name="frm" oninput="formChanged()" onsubmit="return loginValidate()" action="/login" method="post" class="w-all mx-auto">
+      <h2 class="text-center fw-bold fs-2">LOGIN</h2>
+    <div class="form-floating mb-4 mt-3">
+  <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{userData.email}}">
+  <label for="email">Email</label><div><i class="text-danger remove-err" id="hi">{{err.email}}</i></div>
+</div>
+  <div class="form-floating mb-3">
+  <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="{{userData.password}}">
+  <label for="p">Password</label><div><i class="text-danger remove-err">{{err.password}}</i></div>
+</div>
+  <div class="mx-auto text-center mt-3">
+    <button type="submit" class="btn btn-primary btn-bg">Login</button>
+  </div>
+  <div class="text-center mt-3">
+<a href="/forgot_password" class="text-decoration-none theme-color">Forgot Password ?</a>
+  </div>
+  <div class="text-center mt-3">
+Not a member ? <a href="/signup" class="text-decoration-none theme-color">Register Now</a>
+  </div>
+  </div>
+</form>
+</div>

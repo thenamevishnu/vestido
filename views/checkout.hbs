@@ -1,0 +1,181 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 col-lg-6 mt-md-3">
+            <div class="mt-5 shadow py-4">
+                <form name="frm" oninput="formChanged()" id="checkoutForm" class="w-75 mx-auto" action="" method="post">
+                    <div class="form-floating mb-3">
+                        <select name="country" id="country" class="form-select">
+                            <option value="0">Select Country</option> 
+                            <option value="India" {{#eq userData.country "India"}} selected {{/eq}}>India</option>
+                        </select>
+                        <label for="country">country</label><div><i class="text-danger remove-err">{{err.country}}</i></div>
+                    </div>
+                    <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="first_name" placeholder="first_name" name="first_name" value="{{userData.first_name}}">
+                            <label for="first_name">First Name</label><div><i class="text-danger remove-err">{{err.first_name}}</i></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="last_name" placeholder="last_name" name="last_name" value="{{userData.last_name}}">
+                            <label for="last_name">Last Name</label><div><i class="text-danger remove-err">{{err.last_name}}</i></div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea type="text" class="form-control" id="address" placeholder="address" name="address">{{userData.address}}</textarea>
+                        <label for="address">Address</label><div><i class="text-danger remove-err">{{err.address}}</i></div>
+                    </div>
+                    <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                        <select name="state" id="state" class="form-select">
+                            <option value="0">Select State</option> 
+                            <option value="Kerala" {{#eq userData.state "Kerala"}} selected {{/eq}}>Kerala</option>
+                        </select>
+                        <label for="state">State</label><div><i class="text-danger remove-err">{{err.state}}</i></div>
+                    </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="zip" placeholder="zip" name="zip" value="{{userData.zip}}">
+                            <label for="zip">Posta / Zip</label><div><i class="text-danger remove-err">{{err.zip}}</i></div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{userData.email}}">
+                            <label for="email">Email</label><div><i class="text-danger remove-err">{{err.email}}</i></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="phone" placeholder="phone" name="phone" value="{{userData.phone}}">
+                            <label for="phone">Phone</label><div><i class="text-danger remove-err">{{err.phone}}</i></div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea type="text" class="form-control" id="notes" placeholder="notes" name="notes">{{userData.notes}}</textarea>
+                        <label for="notes">Order Notes</label><div><i class="text-danger remove-err">{{err.notes}}</i></div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select name="payment" id="payment" class="form-select">
+                            <option value="0" selected>Select Payment Option</option> 
+                            <option value="cod">Cash On Delivery</option>
+                            <option value="online">Online Payment</option>
+                            {{#eq userBalance 0}}
+                            {{else}}
+                                {{#if cod}}
+                                    <option value="walletcod">COD + Wallet ( ₹{{userBalance}} )</option>
+                                    {{else}}
+                                    <option value="walletcod">COD + Wallet ( ₹{{userBalance}} )</option>
+                                    <option value="walletonline">Online + Wallet ( ₹{{userBalance}} )</option>
+                                {{/if}}
+                                
+                            {{/eq}}
+                        </select>
+                        <label for="payment">Payments</label><div><i class="text-danger remove-err">{{err.payment}}</i></div>
+                    </div>
+                    <div class="">
+                        <input type="checkbox" id="saveAddress" name="saveAddress">
+                        <label>
+                            Save This Address
+                        </label>
+                    </div>
+                    {{#if address}}
+                        <div class="">
+                            <a href="/address_list" class="text-decoration-none theme-color">Choose saved address</a>
+                        </div>
+                    {{/if}}
+                        <div class="mx-auto text-center">
+                            <button onclick="return checkoutForm()" type="submit" class="btn btn-outline-secondary"><i class="fa fa-checkout"></i> CheckOut</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+ 
+        <div class="col-12 col-lg-6 p-3">
+            <div class="row">
+                <div class="col-12 mt-5 border shadow text-center">
+                    <div class="py-5">
+                        <span>Enter your coupon code if you have one</span>
+                    <div class="input-group mb-3 w-50 mt-3 mx-auto">
+  <input type="text" class="form-control height" placeholder="Enter coupon here" id="input-coupon" oninput="document.getElementById('coupon-err').innerHTML=''">
+  <span class="input-group-text cursor-pointer bg-color" id="basic-addon2" onclick="return applyCoupon()">APPLY</span>
+</div>
+<div id="coupon-err"></div>
+<div class="mt-5 cursor-pointer position-relative" data-bs-toggle="modal" data-bs-target="#staticBackdrop">🎁 CLICK HERE TO GET OFFERS </div>
+<div id="fill-address" class="text-danger"></div>
+                    </div>
+            </div>
+
+                <div class="col-12 mt-4 border shadow p-4">
+                    <h5>Your Orders</h5>
+                    <div class="row fw-bold mt-3">
+                        <div class="col-6">Product</div>
+                        <div class="col-6 text-end">Total</div>
+                    </div>
+                    {{#each products}}
+                        <div class="row fw-bold mt-2">
+                            <div class="col-6">{{product_details.[0].title}} X {{qty}} ({{size}})</div>
+                            <div class="col-6 text-end">₹{{total}}</div>
+                        </div>
+                    {{/each}}
+                        <div class="row fw-bold mt-4" id="disPriceShow" style="display:none;">
+                            <div class="col-6 text-success">Coupon Applied</div>
+                            <div class="col-6 text-end text-danger" id="disPrice"></div>
+                        </div>
+                        <div class="row fw-bold mt-4">
+                            <div class="col-6">Grand Total</div>
+                            <div class="col-6 text-end" id="grandTotal">₹{{grandTotal}}</div>
+                        </div>
+
+                    
+
+                    
+                </div>
+            
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">AVAILABLE COUPONS</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body mx-auto">
+        {{#if coupons}}
+        {{#each coupons}}
+            <div class="coupon mb-2 shadow">
+                <div class="price">{{discount}}<small>%</small></div>
+                    <div class="info position-relative">
+                        <h6>Remaining : {{remaining}}/{{stocks}}</h6>
+                        <p>Minimum Purchase : ₹{{min_purchase}}</p>
+                        <p>Discount Upto : ₹{{max_discount}}</p>
+                    <p>TO : {{#date to}} {{to}} {{/date}}</p> 
+                    <code class="cursor-pointer" id="{{code}}" title="Copy {{code}}" onclick="copyToClipboard('{{code}}')">{{code}}</code>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+
+    {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="signup-form">
+    <form name="frm" oninput="formChanged()" onsubmit="return couponValidation()" action="/admins/edit-coupon/{{data._id}}" method="post" class="w-all mx-auto">
+        <div class="form-floating mb-4 mt-3">
+            <input type="text" class="form-control" id="code" placeholder="code" name="code" value="{{data.code}}" style="text-transform:uppercase;">
+            <label for="code">Code</label>
+            <div><i class="text-danger remove-err">{{err.code}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="discount" placeholder="discount" name="discount" value="{{data.discount}}">
+            <label for="discount">Discount</label>
+            <div><i class="text-danger remove-err">{{err.discount}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="min_amount" placeholder="min_amount" name="min_amount" value="{{data.min_purchase}}">
+            <label for="min_amount">Mininum Purchase Amount</label>
+            <div><i class="text-danger remove-err">{{err.min_amount}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="max_amount" placeholder="max_amount" name="max_amount" value="{{data.max_discount}}">
+            <label for="max_amount">Maximum Discount Amount</label>
+            <div><i class="text-danger remove-err">{{err.max_amount}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="stocks" placeholder="stocks" name="stocks" value="{{data.stocks}}">
+            <label for="stocks">Stocks</label>
+            <div><i class="text-danger remove-err">{{err.stocks}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="start1" placeholder="start" name="start" min="{{#dateFormat data.from}}{{data.from}}{{/dateFormat}}" value="{{#dateFormat data.from}}{{data.from}}{{/dateFormat}}">
+            <label for="start">Start</label>
+            <div><i class="text-danger remove-err">{{err.start}}</i></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="expire1" placeholder="expire" name="expire" min="{{#dateFormat data.from}}{{data.from}}{{/dateFormat}}" value="{{#dateFormat data.to}}{{data.to}}{{/dateFormat}}">
+            <label for="expire">Expire</label>
+            <div><i class="text-danger remove-err">{{err.expire}}</i></div>
+        </div>
+        <div class="mx-auto text-center mt-3">
+            <button type="submit" class="btn btn-primary btn-bg"><i class="fa fa-edit"></i> EDIT</button>
+        </div>
+    </form>
+</div>

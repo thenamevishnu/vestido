@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="mx-auto d-flex justify-content-center set-w-h overflow">
+                <img class="curved-border img-fluid" id="product-image" src="/images/products/{{products.photo.[0]}}">
+            </div>
+            <div class="container d-flex justify-content-center mt-3">
+                {{#each products.photo}}
+                    <img width="35px" src="/images/products/{{[]}}" class="mx-2 cursor-pointer" onmouseover="changeImage(this.src)" onclick="changeImage(this.src)">
+                {{/each}}
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                {{#if outofstock}}
+                <span class="text-center text-danger"><span class="fw-bold">Out Of Stock</span> : Product is out of stock due to the high orders! , We will add more stocks as soon as possible.</span>
+                {{else}}
+                <a href="/addtocart/{{products._id}}" class="btn add-cart me-3 text-white" role="button" id="addtocart"><i class="fa fa-shopping-cart"></i> ADD TO CART</a>
+            <a href="/addtowishlist/{{products._id}}" class="btn wish-now text-white" role="button" id="wish-now"><i class="fa fa-heart"></i> WISHLIST NOW</a>
+                {{/if}}
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mt-4 mt-md-0">
+            <div class="mt-1 mt-md-5">
+                {{#if err}}<div class="alert alert-warning" role="alert">{{err}}</div>{{/if}}
+
+                <h6 class="theme-color">{{products.brand}}</h6>
+                <h5 class="theme-sec-color cursor-pointer">{{products.title}}</h5>
+                <span class="fs-5 fw-bold mt-3">₹{{products.price}}</span>
+                <div class="text-success mt-4">
+                <div><label class="me-3 theme-color">Select Size : </label>
+                    {{#if products.size.[0]}}<button id="size_S" class="order-size me-2" onclick="selectSize('S','{{products._id}}')">S</button>{{/if}}
+                    {{#if products.size.[1]}}<button id="size_M" class="order-size me-2" onclick="selectSize('M','{{products._id}}')">M</button>{{/if}}
+                    {{#if products.size.[2]}}<button id="size_L" class="order-size me-2" onclick="selectSize('L','{{products._id}}')">L</button>{{/if}}
+                    {{#if products.size.[3]}}<button id="size_XL" class="order-size me-2" onclick="selectSize('XL','{{products._id}}')">XL</button>{{/if}}
+                    {{#if products.size.[4]}}<button id="size_XXL" class="order-size me-2" onclick="selectSize('XXL','{{products._id}}')">XXL</button>{{/if}}<span id="show_selected" class="text-secondary"></span>
+                </div>
+                <div class="mt-4">
+                 <h6><i class="fa fa-check-circle text-primary"></i> <code class="theme-color">Cash on delivery available!</code></h6>
+                </div>
+                <div class="mt-4">
+                    
+                        {{#eq totalReview 0}} 
+                            <span class="text-danger">No Reviews yet!</span>
+                        {{else}}
+                            <h3><span class="text-dark">{{#rating ratingAvg "text"}}{{/rating}} | {{totalReview}} Reviews</span></h3>
+                        {{/eq}}
+                   
+                </div>
+                {{!-- <div class="mt-5">
+                    <h5 class="theme-sec-color">available Offers</h5>
+                    <div>
+                        <ul class="theme-color">
+                            <li>10% Discount for this product</li>
+                        </ul>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="mt-5 mb-3">
+
+{{!-- review --}}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <h6>Rating & Reviews</h6>
+        </div>
+        <div class="post-review">
+            <a href="/post-review/{{products._id}}" role="button" class="btn btn-sm text-white button"><i class="fa fa-plus"></i> POST REVIEW</a>
+        </div>
+    </div>
+   
+   <div class="mt-4">
+    
+    {{#if review}}
+     {{#each review}}
+            <div class="review-box p-3 mt-3">
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <i class="fa fa-user-circle fs-4"></i> <span class="ms-2 fst-italic">@{{username}}</span>
+            </div>
+            {{!-- <div>
+                <i class="far fa-thumbs-up me-3 fs-6" onclick="likeReview('{{../products._id}}')"> 56</i><i class="far fa-thumbs-down fs-6" onclick="dislikeReview('{{../products._id}}')"> 9</i>
+            </div> --}}
+        </div>
+        <div class="mt-3">
+            <div>{{#rating rating "bg"}}{{/rating}}<span class="fst-italic fw-bold ms-2">{{text}}</span></div> 
+        </div>
+    </div>
+     {{/each}}
+     <div>
+        <a href="/show-reviews/{{products._id}}" class="text-decoration-none theme-color">Show All Reviews</a>
+     </div>
+     {{else}}
+<div class="review-box p-3 mt-3">
+        <div class="text-center">
+            <div><span class="fs-5 fst-italic text-danger">No Reviews yet!</span></div> 
+        </div>
+    </div>
+     {{/if}}
+
+</div>
+
+</div>
+
+{{!-- review end --}}
+
+

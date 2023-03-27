@@ -1,0 +1,80 @@
+<div class="container mt-3 mx-auto">
+    {{#with order.[0]}}
+    <div class="row shadow rounded mb-4">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-md-5 p-3 d-flex justify-content-center border">
+                    <img src="/images/products/{{orders.image}}" style="width:15rem;">
+                </div>
+                <div class="col-12 col-md-7 p-5 border">
+                    <div class="fs-5 fw-bold">{{orders.title}}</div>
+                    <div><b>PRICE</b> : ₹{{orders.price}}</div>
+                    <div><b>SIZE</b> : {{orders.size}}</div>
+                    <div><b>CATEGORY</b> : {{orders.category}}</div>
+                    <div><b>SUB CATEGORY</b> : {{orders.sub_category}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-6 mt-2 p-5 border">
+                    <h4>BILLING DETAILS</h4>
+                    <div><b>PRODUCT</b> : {{orders.title}}</div>
+                    <div><b>PRICE</b> : ₹{{orders.price}}</div>
+                    <div><b>QTY</b> : {{orders.quantity}}</div>
+                    <div><b>TOTAL</b> : ₹{{orders.total}}</div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 mt-2 p-5 border">
+                    <h4>PAYMENT INFO</h4>
+                    {{#if orders.payment_id}} <div> <b>PAYMENT ID</b> : <code>{{orders.payment_id}}</code></div> {{/if}}
+                    <div><b>PAYMENT TYPE</b> : {{orders.payment_type}}</div>
+                    <div><b>PAYMENT STATUS</b> : {{orders.payment_status}}</div>
+                </div>
+                <div class="col-12 col-lg-4 mt-2 p-5 border text-center">
+                    <h4 class="mb-3">ORDER STATUS</h4>
+                    <div class="mb-3"><b>CURRENT STATUS : </b>
+                    {{#eq orders.status "Pending"}} <span class="text-warning">Pending</span>{{/eq}}
+                    {{#eq orders.status "Shipped"}} <span class="text-primary">Shipped</span>{{/eq}}
+                    {{#eq orders.status "Reached"}} <span class="text-info">Reached</span>{{/eq}}
+                    {{#eq orders.status "Confirmed"}} <span class="text-success">Confirmed</span>{{/eq}}
+                    {{#eq orders.status "Cancelled"}} <span class="text-danger">Cancelled</span>{{/eq}}
+                    </div>
+                    <div>
+                        {{#eq orders.status "Pending"}}
+                            <select oninput="changeOrderStataus(this.value,'{{user_id}}','{{orders.id}}')" name="order_status" class="single-order-select">
+                                <option value="Pending" selected>Pending</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Reached">Reached</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        {{/eq}}
+                        {{#eq orders.status "Shipped"}}
+                            <select oninput="changeOrderStataus(this.value,'{{user_id}}','{{orders.id}}')" name="order_status" class="single-order-select">
+                                <option value="Shipped" selected>Shipped</option>
+                                <option value="Reached">Reached</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        {{/eq}}
+                        {{#eq orders.status "Reached"}}
+                            <select oninput="changeOrderStataus(this.value,'{{user_id}}','{{orders.id}}')" name="order_status" class="single-order-select">
+                                <option value="Reached" selected>Reached</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        {{/eq}}
+                        {{#eq orders.status "Confirmed"}}
+                            <img width="200px" class="mt-3" src="/images/confirmed.png" alt="cancelled order">
+                        {{/eq}}
+                        {{#eq orders.status "Cancelled"}}
+                            <img width="200px" class="mt-3" src="/images/cancelled.png" alt="cancelled order">
+                        {{/eq}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/with}}
+</div>

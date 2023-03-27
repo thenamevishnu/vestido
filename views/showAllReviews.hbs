@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="text-end">
+        <select class="excel-download me-2" id="reviews" oninput="reviews(this.value,'{{product_id}}')">
+            <option value="latest" {{#eq selected "latest"}} selected {{/eq}}>LATEST</option>
+            <option value="positive" {{#eq selected "positive"}} selected {{/eq}}>POSITIVE FIRST</option>
+            <option value="negative" {{#eq selected "negative"}} selected {{/eq}}>NEGATIVE FIRST</option>
+        </select>
+    </div>
+{{#if review}}
+<div class="row">
+     {{#each review}}
+            
+                <div class="col-6">
+                <div class="review-box p-3 mt-3">
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <i class="fa fa-user-circle fs-4"></i> <span class="ms-2 fst-italic">@{{username}}</span>
+            </div>
+            {{!-- <div>
+                <i class="far fa-thumbs-up me-3 fs-6" onclick="likeReview('{{../products._id}}')"> 56</i><i class="far fa-thumbs-down fs-6" onclick="dislikeReview('{{../products._id}}')"> 9</i>
+            </div> --}}
+        </div>
+        <div class="mt-3">
+            <div>{{#rating rating "bg"}}{{/rating}}<span class="fst-italic fw-bold ms-2">{{text}}</span></div> 
+        </div>
+    </div>
+            </div>
+           
+     {{/each}} </div>
+     {{else}}
+<div class="review-box p-3 mt-3">
+        <div class="text-center">
+            <div><span class="fs-5 fst-italic text-danger">No Reviews yet!</span></div> 
+        </div>
+    </div>
+     {{/if}}
+</div>

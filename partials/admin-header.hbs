@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-md navbar-white bg-white">
+  <div class="container-fluid">
+      <h3>{{header}}
+      </h3>
+   
+        <div>
+          {{#if logged}}
+          <a href="/admins/logout" class="text-decoration-none"><span class="fs-5 fw-bold">LogOut </span><i class="fa fa-arrow-right me-3 fs-5 text-danger"></i></a>
+          {{/if}}
+          <button class="menu-button" type="button" onclick="adminOpenNav()">
+      <span class="fs-2 theme-color"><i class="fa fa-bars"></i></span>
+    </button>
+   
+        </div>
+   
+  </div>
+</nav>
+
+<div id="mySidenavAdmin" class="sidenavAdmin">
+  <a href="javascript:void(0)" class="closebtn" onclick="adminCloseNav()">&times;</a>
+  <a href="/admins"><i class="fa fa-home"></i> HOME</a>
+  <a href="/admins/products"><i class="fa fa-list"></i> PRODUCTS</a>
+  <a href="/admins/users"><i class="fa fa-user"></i> USERS</a>
+  <a href="/admins/orders"><i class="fa fa-cart-arrow-down"></i> ORDERS</a>
+  <a href="/admins/coupons"><i class="fa fa-tag"></i> COUPONS</a>
+  <a href="/admins/category"><i class="fa fa-sitemap"></i> CATEGORY</a>
+  <a href="/admins/sales_report"><i class="fa fa-bar-chart"></i> SALES & REPORT</a>
+</div>

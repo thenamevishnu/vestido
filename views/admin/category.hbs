@@ -1,0 +1,63 @@
+{{!-- lap --}}
+
+<div class="container-fluid d-none d-lg-block">
+  <div class="d-flex justify-content-center mt-2">
+        <div class="btn-group">
+          <a href="/admins/add_category" class="btn btn-md btn-outline-primary" role="button"><i class="fa fa-plus"></i> Category</a>
+        </div>
+    </div>
+    <table class="table table-hover usermanage border border-1">
+  <thead>
+    <tr>
+      <th>CATEGORY</th>
+      <th>SUB CATEGORY</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each category}}        
+        <tr>
+            <td>{{category}}</td>
+            <td><ul>{{#each sub_category}} <li>{{[]}}</li>{{/each}}</ul></td>
+            <td>
+                <a href="/admins/edit_category/{{_id}}" role="button" class="btn btn-primary" title="edit category"><i class="fa fa-edit"></i></a>
+                {{#if status}}
+                  <a onclick="return confirm('Are you sure to disable {{category}} ?')" href="/admins/disable_category/{{_id}}" role="button" class="btn btn-danger" title="disable category"><i class="fa fa-ban"></i></a>
+                {{else}}
+                <a onclick="return confirm('Are you sure to enable {{category}} ?')" href="/admins/enable_category/{{_id}}" role="button" class="btn btn-success" title="enable category"><i class="fa fa-unlock"></i></a>
+                {{/if}}
+            </td>
+        </tr> 
+    {{/each}}
+  </tbody>
+</table>
+</div>
+
+{{!-- mobile --}}
+
+<div class="container-fluid d-block d-lg-none">
+  <div class="d-flex justify-content-center mt-2">
+        <div class="btn-group">
+          <a href="/admins/add_category" class="btn btn-sm btn-outline-primary" role="button"><i class="fa fa-plus"></i> Category</a>
+        </div>
+    </div>
+    <table class="table table-hover usermanage border border-1">
+    {{#each category}}    
+        <tr>
+            <th>CATEGORY</th><td>{{category}}</td>
+        </tr>
+        <tr>
+            <th>SUB CATEGORY</th><td><ul>{{#each sub_category}} <li>{{[]}}</li>{{/each}}</ul></td>
+        </tr>  
+        <tr>
+            <th>ACTION</th><td>
+              <a href="/admins/edit_category/{{_id}}" role="button" class="btn btn-primary" title="edit category"><i class="fa fa-edit"></i></a>
+            {{#if status}}
+                  <a onclick="return confirm('Are you sure to disable {{category}} ?')" href="/admins/disable_category/{{_id}}" role="button" class="btn btn-danger" title="disable category"><i class="fa fa-ban"></i></a>
+                {{else}}
+                <a onclick="return confirm('Are you sure to enable {{category}} ?')" href="/admins/enable_category/{{_id}}" role="button" class="btn btn-success" title="enable category"><i class="fa fa-unlock"></i></a>
+                {{/if}}
+        </tr>
+    {{/each}}
+</table>
+</div>

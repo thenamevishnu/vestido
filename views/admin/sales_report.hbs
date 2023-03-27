@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="mt-3 d-flex float-end mb-3">
+        <select class="excel-download me-2" id="sales-report-filter" oninput="sales_report(this.value)">
+            <option value="all" {{#eq selected "all"}} selected {{/eq}}>ALL</option>
+            <option value="daily" {{#eq selected "daily"}} selected {{/eq}}>DAILY</option>
+            <option value="monthly" {{#eq selected "monthly"}} selected {{/eq}}>MONTHLY</option>
+            <option value="yearly" {{#eq selected "yearly"}} selected {{/eq}}>YEARLY</option>
+        </select>
+        <button class="excel-download me-2" onclick="ExportToExcel()">TO EXCEL</button>
+        <button class="pdf-download" onclick="window.print()">TO PDF</button>
+    </div>
+    <table class="table table-hover table-fluid usermanage border border-1">
+  <thead>
+    <tr>
+      <th>TITLE</th>
+      <th>USER</th>
+      <th>PRICE</th>
+      <th>INFO</th>
+      <th>QUANTITY</th>
+      <th>TOTAL</th>
+      <th>DATE</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each order}}        
+        <tr>
+            <td><span class="for-md fw-bold">TITLE</span><a href="/product_details/{{orders.product_id}}" class="text-decoration-none text-dark">{{orders.title}}</a></td>
+             <td><span class="for-md fw-bold">USER</span> @{{user_info.[0].username}}</td>
+            <td><span class="for-md fw-bold">PRICE</span> ₹{{orders.price}}</td>
+            <td><span class="for-md fw-bold">INFO</span><ul><li>BRAND : {{orders.brand}}</li><li>CATEGORY : {{orders.category}}</li><li>SUB-CATEGORY : {{orders.sub_category}}</li></ul></td>
+            <td><span class="for-md fw-bold">QUANTITY</span> {{orders.quantity}}</td>
+            <td><span class="for-md fw-bold">TOTAL</span> ₹{{orders.grandTotal}}</td>
+            <td><span class="for-md fw-bold">DATE</span> {{#ordered orders.date}} {{orders.date}} {{/ordered}}</td>
+        </tr> 
+    {{/each}}
+  </tbody>
+</table>
+</div>
+
+{{!-- for download data --}}
+
+<table class="table table-hover table-fluid usermanage border border-1 d-none" id="sales-report">
+  <thead>
+    <tr>
+      <th>TITLE</th>
+      <th>USER</th>
+      <th>PRICE</th>
+      <th>BRAND</th>
+      <th>CATEGORY</th>
+      <th>SUB CATEGORY</th>
+      <th>QUANTITY</th>
+      <th>TOTAL</th>
+      <th>DATE</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each order}}        
+        <tr>
+            <td>{{orders.title}}</td>
+             <td>@{{user_info.[0].username}}</td>
+            <td>₹{{orders.price}}</td>
+            <td>{{orders.brand}}</td>
+            <td>{{orders.category}}</td>
+            <td>{{orders.sub_category}}</td>
+            <td>{{orders.quantity}}</td>
+            <td>₹{{orders.grandTotal}}</td>
+            <td>{{#ordered orders.date}} {{orders.date}} {{/ordered}}</td>
+        </tr> 
+    {{/each}}
+  </tbody>
+</table>

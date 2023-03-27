@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <table class="table table-hover table-fluid usermanage border border-1">
+  <thead>
+    <tr>
+      <th>PHOTO</th>
+      <th>TITLE</th>
+      <th>PRICE</th>
+      <th>BRAND</th>
+      <th>QTY</th>
+      <th>TOTAL</th>
+      <th>DATE</th>
+      <th>STATUS</th>
+      <th>MORE</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each order}}        
+       <tr> 
+            
+                <td><span class="for-md fw-bold">PHOTO</span> <img width="100px" src="/images/products/{{orders.image}}"></td>
+                <td><span class="for-md fw-bold">TITLE</span> {{orders.title}}</td>
+                <td><span class="for-md fw-bold">PRICE</span> ₹{{orders.price}}</td>
+                <td><span class="for-md fw-bold">BRAND</span> {{orders.brand}}</td>
+                <td><span class="for-md fw-bold">QTY</span> {{orders.quantity}}</td>
+                <td><span class="for-md fw-bold">TOTAL</span> ₹{{orders.total}}</td>
+                <td><span class="for-md fw-bold">DATE</span> {{#ordered orders.date}} {{orders.date}} {{/ordered}}</td>
+                <td><span class="for-md fw-bold">STATUS</span> {{orders.status}}</td>
+                <td><span class="for-md fw-bold">MORE</span><a href="/admins/single-order/{{user_id}}-{{orders.id}}" role="button" class="btn btn-outline-info btn-sm">MORE</a></td>
+           
+        </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+

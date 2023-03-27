@@ -1,0 +1,24 @@
+<div class="container mt-4 mt-md-2">
+    <div class="text-center fw-bold fs-4 mt-5 mb-4">GET IN TOUCH</div>
+  
+    <form name="frm" oninput="formChanged()" onsubmit="return contactValidation()" action="" method="post" class="w-all mx-auto p-3">
+        
+            <input type="text" class="form-control" id="name" placeholder="FULL NAME :" name="name" value="{{userData.name}}">
+                <div class="mb-4"><i class="text-danger remove-err" id="hi">{{err.name}}</i></div>
+
+            <input type="text" class="form-control" id="email" placeholder="EMAIL :" name="email" value="{{userData.email}}">
+                <div class="mb-4"><i class="text-danger remove-err">{{err.email}}</i></div>
+
+            <input type="text" class="form-control" id="subject" placeholder="SUBJECT :" name="subject" value="{{userData.subject}}">
+                <div class="mb-4"><i class="text-danger remove-err">{{err.subject}}</i></div>
+
+            <textarea type="text" class="form-control" id="message" placeholder="MESSAGE :" name="message" rows="5">{{userData.message}}</textarea>
+                <div class="mb-4"><i class="text-danger remove-err">{{err.message}}</i></div>
+
+        <div class="mx-auto text-center mt-3">
+            <button type="submit" class="btn btn-primary btn-bg"><i class="fa fa-paper-plane"></i> SEND</button>
+        </div>
+  
+    </form>
+   
+</div>

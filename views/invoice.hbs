@@ -1,0 +1,63 @@
+<div class="container-fluid mt-0 mt-md-5">
+    <div class="row shadow p-3">
+        <div class="col-12 fw-bold theme-color text-center">
+            <img src="/images/VESTIDO.png" alt="Logo">
+        </div>
+        <div class="col-12 mt-3 fw-bold theme-color text-end">
+            <p>CUSTOMER # @{{user.username}}</p>
+            <P>DATE # {{#date orderData.[0].date}}{{orderData.date}}{{/date}}</P>
+        </div>
+    </div>
+    <div class="row shadow p-3 mt-2 table-bordered">
+    <table class="table table-hover table-fluid usermanage border border-1">
+        <thead>
+            <tr>
+            <th>TITLE</th>
+            <th>SIZE</th>
+            <th>PRICE</th>
+            <th>BRAND</th>
+            <th>QUANTITY</th>
+            <th>DATE</th>
+            <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each orderData}}        
+                <tr>
+                    <td><span class="for-md fw-bold">TITLE</span>{{title}}</td>
+                    <td><span class="for-md fw-bold">PRICE</span>₹{{price}}</td>
+                    <td><span class="for-md fw-bold">SIZE</span>{{size}}</td>
+                    <td><span class="for-md fw-bold">BRAND</span>{{brand}}</td>
+                    <td><span class="for-md fw-bold">QUANTITY</span>{{quantity}}</td>
+                    <td><span class="for-md fw-bold">DATE</span>{{#date date}} {{date}} {{/date}}</td> 
+                    <td><span class="for-md fw-bold">TOTAL</span>₹{{grandTotal}}</td>
+                </tr> 
+            {{/each}}
+        </tbody>
+    </table>
+    </div>
+    <div class="row shadow p-3 mt-3">
+         <div class="col-12 d-flex justify-content-between fw-bold">
+            <div>TOTAL : </div>
+            <DIV>₹{{grandTotal}}</DIV>
+        </div>
+    </div>
+    <div class="row shadow p-3 mt-3">
+    <div class="col-12 col-md-4 text-md-start text-center fw-bold theme-color">
+        <p>VESTIDO ONLINE SHOP Pvt.LTD</p>
+        <P>KOZHIKODE, KERALA,</P>
+        <p>INDIA, 677634</p>
+    </div>
+    <div class="col-12 col-md-4 text-center mx-auto fw-bold theme-color">
+        {{#eq orderData.[0].payment_status "Paid"}}
+            <img src="/images/paid.jpg" class="img-fluid" alt="paid paid">
+        {{/eq}}
+    </div>
+    <div class="col-12 col-md-4">
+    </div>
+</div>
+</div>
+
+<script>
+    window.onload = window.print()
+</script>
