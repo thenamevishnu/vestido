@@ -14,14 +14,14 @@
                 <div class="review-box p-3 mt-3">
         <div class="d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <i class="fa fa-user-circle fs-4"></i> <span class="ms-2 fst-italic">@{{username}}</span>
+                <i class="fa fa-user-circle fs-4"></i> <span class="ms-2 fst-italic">@{{reviews.username}}</span>
             </div>
             {{!-- <div>
                 <i class="far fa-thumbs-up me-3 fs-6" onclick="likeReview('{{../products._id}}')"> 56</i><i class="far fa-thumbs-down fs-6" onclick="dislikeReview('{{../products._id}}')"> 9</i>
             </div> --}}
         </div>
         <div class="mt-3">
-            <div>{{#rating rating "bg"}}{{/rating}}<span class="fst-italic fw-bold ms-2">{{text}}</span></div> 
+            <div>{{#rating reviews.rating "bg"}}{{/rating}}<span class="fst-italic fw-bold ms-2">{{reviews.text}}</span></div> 
         </div>
     </div>
             </div>

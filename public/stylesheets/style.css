@@ -606,3 +606,23 @@ display: block;
   margin-top: 60px;
   padding: 5px;
 }
+.scrollup-position{
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  animation-name: scrollUp;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes scrollUp{
+  0%{
+    bottom:1.5rem;
+  }
+  50%{
+    bottom:2rem;
+  }
+  100%{
+    bottom:1.5rem;
+  }
+}

@@ -85,8 +85,15 @@ module.exports = {
 
     showAllReviews:async (req, res, next)=>{
         try{
-            let review = req.session.allReview ?? await reviews.findOne({product_id:new ObjectId(req.params.id)})
-            review = review?.reviews
+            let review = req.session.allReview ?? await reviews.aggregate([
+                {
+                    $match:{
+                        product_id:new ObjectId(req.params.id)
+                    }
+                },{
+                    $unwind:"$reviews"
+                }
+            ]).toArray()
             let cwcount = await getCwcount(req.session.user_id)
             let product_id = req.params.id
             selected = req.session.review_selected
@@ -100,6 +107,7 @@ module.exports = {
         try{
             let sortby = req.body.sort
             let product_id = req.body.product_id
+            let review
             if(sortby=="latest"){
                 review = await reviews.aggregate([
                     {
@@ -114,6 +122,8 @@ module.exports = {
                                 $reverseArray:"$reviews"
                             }
                         }
+                    },{
+                        $unwind:"$reviews"
                     }
                 ]).toArray()
             }
@@ -124,16 +134,10 @@ module.exports = {
                             product_id:new ObjectId(product_id)
                         }
                     },{
-                        $project:{
-                            _id:1,
-                            product_id:1,
-                            reviews:{
-                                $sortArray:{
-                                    input:"$reviews",sortBy:{
-                                        rating:-1
-                                    }
-                                }
-                            }
+                        $unwind:"$reviews"
+                    },{
+                        $sort:{
+                            "reviews.rating":-1
                         }
                     }
                 ]).toArray()
@@ -145,22 +149,16 @@ module.exports = {
                             product_id:new ObjectId(product_id)
                         }
                     },{
-                        $project:{
-                            _id:1,
-                            product_id:1,
-                            reviews:{
-                                $sortArray:{
-                                    input:"$reviews",sortBy:{
-                                        rating:1
-                                    }
-                                }
-                            }
+                        $unwind:"$reviews"
+                    },{
+                        $sort:{
+                            "reviews.rating":1
                         }
                     }
                 ]).toArray()
             }
             req.session.review_selected = sortby
-            req.session.allReview = review[0]
+            req.session.allReview = review
             res.json({status:true})
         }catch(err){
             next()
