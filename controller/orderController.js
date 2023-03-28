@@ -87,7 +87,7 @@ module.exports = {
                 grandTotal = grandTotal[0].total;
                 let cwcount = await getCwcount(user)
                 let userInfo = await users.findOne({_id:new ObjectId(user)})
-                let userBalance = parseFloat(userInfo?.balance) == 0 ? 0 : parseFloat(userInfo?.balance)
+                let userBalance = userInfo?.balance ? parseFloat(userInfo?.balance) : 0
                 let cart = await carts.findOne({user_id:new ObjectId(user)})
                 await cart.products.forEach(async (data)=>{
                     let result = await product.findOne({_id:new ObjectId(data.product_id)})
@@ -270,6 +270,7 @@ module.exports = {
                     grandTotal = (grandTotal - disPrice).toFixed(2)
                 }
                 if(payment == "WalletCod"){
+                    let payment_status;
                     let result = await users.findOne({
                         _id:new ObjectId(req.session.user_id),
                     })
