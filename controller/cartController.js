@@ -127,7 +127,7 @@ module.exports = {
                         total: price
                     }]
                 }
-                await carts.insertOne(obj)
+                await carts.insertOne(obj);
                 res.redirect("/cart")
             }else{
                 if(cart.products){
