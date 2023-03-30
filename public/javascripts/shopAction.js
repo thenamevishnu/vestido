@@ -21,9 +21,18 @@ function filterPrice(){
     })
 }
 
+function filterCategory(value){
+    $.post("/changeShopContents",{
+        categoryBy:value
+    },function(response){
+        location.reload()
+    })
+}
+
 function filerSize(){
     let sizeDiv = document.getElementById("size")
     let size = sizeDiv.querySelectorAll("input[type='checkbox']")
+    console.log(size);
     i=0
     obj = []
     size.forEach(async (data,index)=>{
@@ -32,7 +41,9 @@ function filerSize(){
             obj.push(value)
         }
     })
-    console.log(obj);
+    if(obj==""){
+        obj="empty"
+    }
     $.post("/changeShopContents",{
         size:obj
     },function(response){
@@ -65,7 +76,7 @@ function sendData(e){
     })
 }
 
-function pagination(value){
+function paginationCount(value){
     let skip = ( value - 1 ) * 6
     let limit = skip + 6
     $.post("/changeShopContents",{

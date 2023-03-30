@@ -251,9 +251,9 @@ function addProductValidation(){
     const size_xxl = document.frm.size_xxl.checked
     const files = document.frm.file.value
 
-    const regx_title = /^\w+([\w\W]){5,80}$/gm
-    const regx_brand = /^\w[\w\s]{5,}$/gm
-    const regx_desc = /^\w+([\w\W]){5,180}$/gm
+    const regx_title = /^\w([\w\W]){3,}$/gm
+    const regx_brand = /^\w([\w\W]){3,}$/gm
+    const regx_desc = /^\w([\w\W]){3,}$/gm
     
     let all = document.getElementsByClassName("text-danger remove-err");
     
@@ -327,9 +327,9 @@ function editProductValidation(){
     const size_xl = document.frm.size_xl.checked
     const size_xxl = document.frm.size_xxl.checked
 
-    const regx_title = /^\w+([\w\W]){5,80}$/gm
-    const regx_brand = /^\w[\w\s]{5,}$/gm
-    const regx_desc = /^\w+([\w\W]){5,180}$/gm
+    const regx_title = /^\w([\w\W]){3,}$/gm
+    const regx_brand = /^\w([\w\W]){3,}$/gm
+    const regx_desc = /^\w([\w\W]){3,}$/gm
 
     let all = document.getElementsByClassName("text-danger remove-err");
     
@@ -845,8 +845,16 @@ function applyCoupon(){
             document.getElementById("coupon-err").innerHTML = "<font color='red'>Invalid Coupon!</font>"
         }else if(response.status=="expired"){
             document.getElementById("coupon-err").innerHTML = "<font color='red'>Coupon Expired!</font>"
+        }else if(response.status=="disabled"){
+            document.getElementById("coupon-err").innerHTML = "<font color='red'>Coupon Disabled!</font>"
+        }else if(response.status=="pending"){
+            document.getElementById("coupon-err").innerHTML = "<font color='red'>Coupon Not Actived Yet!</font>"
         }else{
             document.getElementById("coupon-err").innerHTML = "<font color='success'>Coupon Applied!</font>"
+            document.getElementById("input-coupon").disabled = true
+            document.getElementById("basic-addon2").innerHTML = "Remove"
+            document.getElementById("basic-addon2").style.backgroundColor = "red"
+            document.getElementById("basic-addon2").onclick = removeCoupon;
             setTimeout(()=>{
                 document.getElementById("coupon-err").innerHTML = ""
             },2000)
@@ -854,6 +862,22 @@ function applyCoupon(){
             document.getElementById("grandTotal").innerHTML = "₹"+response.totalPrice
             document.getElementById("disPriceShow").style.display = "flex"
         }
+    })
+}
+
+function removeCoupon(){
+    let code = document.getElementById("input-coupon").value
+    $.post("/removeCoupon",{
+        code:code
+    },function(response){
+        document.getElementById("input-coupon").disabled = false
+            document.getElementById("basic-addon2").innerHTML = "Apply"
+            document.getElementById("basic-addon2").style.backgroundColor = "#7e19d1"
+            document.getElementById("basic-addon2").onclick = applyCoupon;
+            document.getElementById("input-coupon").value = null
+            document.getElementById("grandTotal").innerHTML = "₹"+response.totalPrice
+            document.getElementById("disPrice").innerHTML = ""
+            document.getElementById("disPriceShow").style.display = "none"
     })
 }
 
@@ -1053,4 +1077,40 @@ window.onscroll = function() { scroll_show() }
 
 function go_to_top(){
     document.documentElement.scrollTop = 0;
+}
+
+function checkDateBetween(){
+    let from = document.frm.from.value
+    let to = document.frm.to.value
+    if(from=="" && to==""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Select from and to date!',
+        })
+        return false
+    }
+    if(from==""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Select from date!',
+        })
+        return false
+    }
+    if(to==""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Select to date!',
+        })
+        return false
+    }
+    $.post("/admins/sales-report",{
+        from:from,
+        to:to
+    },function(response){
+        location.reload()
+    })
+    return false
 }

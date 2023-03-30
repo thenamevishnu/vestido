@@ -161,13 +161,13 @@
       <div class="modal-body mx-auto">
         {{#if coupons}}
         {{#each coupons}}
-            <div class="coupon mb-2 shadow">
+            <div class="coupon mb-2 shadow {{#eq status "disabled"}} coupon-gray{{/eq}}">
                 <div class="price">{{discount}}<small>%</small></div>
                     <div class="info position-relative">
                         <h6>Remaining : {{remaining}}/{{stocks}}</h6>
                         <p>Minimum Purchase : ₹{{min_purchase}}</p>
                         <p>Discount Upto : ₹{{max_discount}}</p>
-                    <p>TO : {{#date to}} {{to}} {{/date}}</p> 
+                    <p>{{#eq status "enabled"}}TO : {{#date to}} {{to}} {{/date}} {{/eq}} {{#eq status "disabled"}}STATUS : Disabled {{/eq}}{{#eq status "Pending"}}STATUS : Not Actived {{/eq}}{{#eq status "Expired"}}STATUS : Expired {{/eq}}</p> 
                     <code class="cursor-pointer" id="{{code}}" title="Copy {{code}}" onclick="copyToClipboard('{{code}}')">{{code}}</code>
                 </div>
             </div>

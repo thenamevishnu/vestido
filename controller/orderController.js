@@ -103,7 +103,7 @@ module.exports = {
                 let datenow = Math.floor(new Date().getTime()/1000)
                 await coupon.updateMany({status:"pending",from:{$lte:datenow}},{$set:{status:"enabled"}})
                 await coupon.updateMany({status:"enabled",to:{$lte:datenow}},{$set:{status:"expired"}})
-                let coupons = await coupon.find({status:"enabled",remaining:{$gt:0},min_purchase:{$lte:grandTotal}}).toArray()
+                let coupons = await coupon.find().toArray()
                 if(grandTotal <= userBalance){
                     cod = true
                 }else{
@@ -270,7 +270,7 @@ module.exports = {
                     grandTotal = (grandTotal - disPrice).toFixed(2)
                 }
                 if(payment == "WalletCod"){
-                    let payment_status;
+                    var payment_status;
                     let result = await users.findOne({
                         _id:new ObjectId(req.session.user_id),
                     })
@@ -634,7 +634,7 @@ module.exports = {
     checkCoupon:async (req, res, next)=>{
         try{
             let code = req.body.code
-            let result = await coupon.findOne({code:code,status:"enabled",remaining:{$gt:0}})
+            let result = await coupon.findOne({code:code})
             if(result==null){
                 res.json({status:"not found"})
             }else{
@@ -644,6 +644,12 @@ module.exports = {
                     await coupon.updateOne({code:code},{$set:{status:"expired"}})
                     res.json({status:"expired"})
                 }else{
+                    if(result.status=="disabled"){
+                        res.json({status:"disabled"})
+                    }else{
+                        if(result.status=="pending"){
+                            res.json({status:"pending"})
+                        }else{
                     let cart = await carts.findOne({user_id:new ObjectId(req.session.user_id)})
                     if(cart.coupon!=code){
                         await carts.updateOne({user_id:new ObjectId(req.session.user_id)},{$set:{coupon:code}})
@@ -666,7 +672,7 @@ module.exports = {
                             }
                         }
                     ]).toArray()
-                    grandTotal = grandTotal[0].total;
+                    grandTotal = grandTotal[0]?.total;
                     discount = result.discount
                     disPrice = (grandTotal * discount / 100).toFixed(2)
                     if(disPrice>result.max_discount){
@@ -680,6 +686,39 @@ module.exports = {
                     res.json({status:true,disPrice:disPrice,totalPrice:totalPrice})
                 }
             }
+            }
+            }
+        }catch(err){
+            next()
+        }
+    },
+
+    removeCoupon:async (req, res, next)=>{
+        try{
+            let code = req.body.code
+            let result = await coupon.findOne({code:code})
+            await carts.updateOne({user_id:new ObjectId(req.session.user_id)},{$set:{coupon:null}})
+            let grandTotal = await carts.aggregate([
+                {
+                    $match:{
+                        user_id:new ObjectId(req.session.user_id)
+                    }
+                },
+                {
+                    $unwind:"$products"
+                },
+                {
+                    $group:{
+                        _id:null,
+                        total:{
+                            $sum:"$products.total"   
+                        }
+                    }
+                }
+            ]).toArray()
+            grandTotal = grandTotal[0]?.total;
+            req.session.discount = null
+            res.json({status:true,totalPrice:grandTotal})
         }catch(err){
             next()
         }

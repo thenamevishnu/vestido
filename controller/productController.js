@@ -45,7 +45,7 @@ module.exports = {
             }]).toArray()
             products = req.session.sort
             if(!products){
-                products = await product.find({category:{$in:category_array}}).limit(6).toArray()
+                products = await product.find({category:{$in:category_array}}).sort({_id:-1}).limit(6).toArray()
                 total_page = await product.countDocuments({category:{$in:category_array}})
                 pagination = Math.ceil(total_page/6)
             }
@@ -75,11 +75,21 @@ module.exports = {
 
     getShopPost:async (req, res, next)=>{
         try{
-            let category = await categories.find({status:{$eq:true}}).toArray()
-            let category_array = []
-            await category.forEach(key=>{
-                category_array.push(key.category)
-            })
+            let categoryBy = req.body?.categoryBy ?? req.session?.categoryBy
+            if(req.body?.categoryBy=="all"){
+                req.session.categoryBy = null
+                categoryBy=null
+            }
+            if(!categoryBy){
+                category = await categories.find({status:{$eq:true}}).toArray()
+                category_array = []
+                await category.forEach(key=>{
+                    category_array.push(key.category)
+                })
+            }else{
+                category_array = [categoryBy]
+                req.session.categoryBy = categoryBy
+            }
             let sort = req.body.sortBy ? req.body.sortBy : req.session.selected ? req.session.selected : "latest"
             let min = req.body.from ? parseInt(req.body.from) : req.session.min ? parseInt(req.session.min) : 0
             let max = req.body.to ? parseInt(req.body.to) : req.session.max ? parseInt(req.session.max) : 10000
@@ -87,16 +97,23 @@ module.exports = {
             let size = req.body['size[]'] ? req.body['size[]'] : req.session.size ? req.session.size : []
             let pageMin = req.body.pageMin ? req.body.pageMin : 0
             let pageMax = req.body.pageMax ? req.body.pageMax : 6
-            if(!Array.isArray(size)){
+            if(!Array.isArray(size) && req.body['size[]']){
                 size = [size]
             }
+            console.log(size);
+            if(!Array.isArray(size) || size=="[]" || size?.length==0){
+                showthis=true
+            }else{
+                showthis=false
+            }
+            console.log(showthis);
             if(sort=="latest"){
                 sortit = { _id:-1 }
             }else{
                 sortit = { price:sort_order }
             }
             
-            if(size.length==0 || (!req.body.sortBy && !req.body.from && !req.body.to && !req.body['size[]'])){
+            if(req.body.size=="empty" || showthis==true){
                 req.session.sort = await product.find({
                     category:{
                         $in:category_array
@@ -117,7 +134,6 @@ module.exports = {
                 })
                 pagination = Math.ceil(total_page/6)
                 req.session.size = null
-                console.log("1");
             }else{
                 req.session.sort = await product.find({
                     category:{
@@ -181,7 +197,7 @@ module.exports = {
                     }
                 }
             ]).toArray()
-            ratingAvg = parseInt(ratingAvg[0]?.avg)
+            ratingAvg = parseFloat(ratingAvg[0]?.avg).toFixed(1)
             err = req.session.err
             let review = []
             i=0

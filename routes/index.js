@@ -115,6 +115,8 @@ router.post("/verifySignup",userController.verifySignup)
 
 router.post("/signupOtpCheck",userController.signupOtpCheck)
 
+router.post("/removeCoupon",userAuth.authentication,orderController.removeCoupon)
+
 // router.post("/reviewPagination",productController.reviewPagination)
 
 module.exports = router;

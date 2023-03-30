@@ -429,7 +429,8 @@ module.exports = {
                 order = filter
             }
             let selected = req.session.admin_filter
-            res.render("admin/sales_report",{title:"SALES REPORT",admin:true,header:"SALES REPORT",logged:true,order,selected})
+            let selected_date = {from:req.session.admin_from,to:req.session.admin_to}
+            res.render("admin/sales_report",{title:"SALES REPORT",admin:true,header:"SALES REPORT",logged:true,order,selected,selected_date})
         }catch(err){
             next()
         }
@@ -437,7 +438,9 @@ module.exports = {
 
     salesReportPost:async (req, res, next)=>{
         try{
-            let filter = req.body.filter
+            let filter = req.body?.filter
+            let from = req.body?.from
+            let to = req.body?.to
             let obj = []
             let order = await orders.aggregate([
                 {
@@ -493,9 +496,29 @@ module.exports = {
                         }
                     })
                 }
+            }else if(from && to){
+                if(order.length>0){
+                    req.session.admin_from = from
+                    req.session.admin_to = to
+                    order.forEach(data=>{
+                        const d = new Date(data.orders.date * 1000)
+                        const month = d.getMonth() + 1 < 10 ? "0"+(d.getMonth()+1) : (d.getMonth()+1)
+                        const day = d.getDate() < 10 ? "0"+d.getDate() : d.getDate()
+                        const date = d.getFullYear()+"-"+month+"-"+day
+                        console.log(from, to , date);
+                        if(date>=from && date<=to){
+                            
+                            obj.push(data)
+                        }
+                    })
+                }
             }else{
                 req.session.admin_filter = "all"
                 obj = order
+            }
+            if(!from && !to){
+                req.session.admin_from = null
+                req.session.admin_to = null
             }
             req.session.adminFilter = obj
             res.json({status:true})

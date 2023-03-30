@@ -1,5 +1,10 @@
 <div class="container-fluid">
     <div class="mt-3 d-flex float-end mb-3">
+      <form name="frm" onsubmit="return checkDateBetween()" class="me-3">
+          <input type="date" name="from" {{#if selected_date}} value="{{selected_date.from}}" {{/if}}>
+          <input type="date" name="to" {{#if selected_date}} value="{{selected_date.to}}" {{/if}}>
+          <button type="submit" class="bg-setup">Apply</button>
+      </form>
         <select class="excel-download me-2" id="sales-report-filter" oninput="sales_report(this.value)">
             <option value="all" {{#eq selected "all"}} selected {{/eq}}>ALL</option>
             <option value="daily" {{#eq selected "daily"}} selected {{/eq}}>DAILY</option>
