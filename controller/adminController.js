@@ -184,6 +184,7 @@ module.exports = {
 
     addProductPost:async (req, res, next)=>{ 
         try{
+            console.log("hi");
             let data = req.body
             let files = req.files
             const price = parseFloat(data.price)
@@ -216,8 +217,7 @@ module.exports = {
                                 req.session.admin_err = {file:"File Upload Failed!"}
                                 req.session.adminData = data
                                 res.redirect("/admins/add_products")
-                            }
-                            
+                            }  
                          })
                     })
                 })
