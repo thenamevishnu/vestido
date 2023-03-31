@@ -45,7 +45,6 @@ module.exports = {
                     orderCount += obj?.orders?.length
                 }
             })
-            console.log(totalRevenue);
             let totalUsers = await user.estimatedDocumentCount()
             let data = {
                 productCount:productCount,
@@ -184,7 +183,6 @@ module.exports = {
 
     addProductPost:async (req, res, next)=>{ 
         try{
-            console.log("hi");
             let data = req.body
             let files = req.files
             const price = parseFloat(data.price)
@@ -209,9 +207,7 @@ module.exports = {
                 })
                 image.forEach(images=>{
                     let public_name = images.split(".")[0] 
-                    console.log("1");
                     cloudinary.uploader.upload(__dirname+"/../public/images/products/"+images,{public_id:public_name}).then(result=>{
-                        console.log(result);
                          fs.unlink(__dirname+"/../public/images/products/"+images,(err)=>{
                             if(err){
                                 req.session.admin_err = {file:"File Upload Failed!"}
