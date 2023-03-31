@@ -208,7 +208,9 @@ module.exports = {
                 })
                 image.forEach(images=>{
                     let public_name = images.split(".")[0] 
+                    console.log("1");
                     cloudinary.uploader.upload(__dirname+"/../public/images/products/"+images,{public_id:public_name}).then(result=>{
+                        console.log(result);
                          fs.unlink(__dirname+"/../public/images/products/"+images,(err)=>{
                             if(err){
                                 req.session.admin_err = {file:"File Upload Failed!"}
