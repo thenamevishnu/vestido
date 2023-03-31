@@ -6,6 +6,15 @@ const product = require("../model/productModel")
 const categories = require("../model/categoryModel")
 const orders = require("../model/orderModel")
 const coupon = require("../model/couponModel")
+const cloudinary = require("cloudinary").v2
+require("dotenv")
+const fs = require("fs")
+
+cloudinary.config({
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
+    api_secret: process.env.api_secret
+});
 
 module.exports = {
     dashboard:async (req, res, next)=>{
@@ -197,6 +206,19 @@ module.exports = {
                     })
                     image.push(""+file.md5+"."+ext+"")
                 })
+                image.forEach(images=>{
+                    let public_name = images.split(".")[0] 
+                    cloudinary.uploader.upload(__dirname+"/../public/images/products/"+images,{public_id:public_name}).then(result=>{
+                         fs.unlink(__dirname+"/../public/images/products/"+images,(err)=>{
+                            if(err){
+                                req.session.admin_err = {file:"File Upload Failed!"}
+                                req.session.adminData = data
+                                res.redirect("/admins/add_products")
+                            }
+                            
+                         })
+                    })
+                })
                 size = []
                 if(data.size_sm=="on"){ size.push("S") }else{ size.push("") }
                 if(data.size_md=="on"){ size.push("M") }else{ size.push("") }
@@ -279,6 +301,18 @@ module.exports = {
                     req.session.admin_err = {file:"You can't add more than 5 images!"}
                     res.redirect("/admins/edit_product/"+id+"")
                 }
+                image.forEach(images=>{
+                    let public_name = images.split(".")[0] 
+                    cloudinary.uploader.upload(__dirname+"/../public/images/products/"+images,{public_id:public_name}).then(result=>{
+                         fs.unlink(__dirname+"/../public/images/products/"+images,(err)=>{
+                            if(err){
+                                req.session.admin_err = {file:"File Upload Failed!"}
+                                req.session.adminData = data
+                                res.redirect("/admins/add_products")
+                            } 
+                         })
+                    })
+                })
                 size = []
                 if(data.size_sm=="on"){ size.push("S") }else{ size.push("") }
                 if(data.size_md=="on"){ size.push("M") }else{ size.push("") }

@@ -4,7 +4,7 @@
         {{#each orders}}
             <div class="row mt-2 mt-md-0 history-hover border-radius-10 p-2 mb-3">      
             <div class="col-12 col-md-2 text-center text-md-start mx-auto" style="width:10rem;">
-                <img src="/images/products/{{orders.image}}" class="card-img-top" alt="{{orders.title}}">
+                <img src="https://res.cloudinary.com/dhya4vcls/image/upload/{{orders.image}}" class="card-img-top" alt="{{orders.title}}">
             </div>
             <div class="col-12 col-md-6 theme-color position-relative mt-4">
                 {{#eq orders.status "Cancelled"}}
