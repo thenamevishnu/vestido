@@ -302,7 +302,7 @@ module.exports = {
                     res.redirect("/admins/edit_product/"+id+"")
                 }
                 image.forEach(images=>{
-                    let public_name = images.split(".")[0] 
+                    let public_name = images.split(".")[0]
                     cloudinary.uploader.upload(__dirname+"/../public/images/products/"+images,{public_id:public_name}).then(result=>{
                          fs.unlink(__dirname+"/../public/images/products/"+images,(err)=>{
                             if(err){

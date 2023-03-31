@@ -5,5 +5,5 @@ const password = process.env.mongodb_password
 let uri = "mongodb+srv://"+username+":"+password+"@vestido.kg7ulv9.mongodb.net/shopping?retryWrites=true&w=majority"
 mongoose.set("strictQuery", false)
 mongoose.connect(uri).then(connect => {
-    console.log("Database Successfully Connected...");
+    console.log("Server Connection Successfull!");
 })
