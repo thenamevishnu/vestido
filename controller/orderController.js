@@ -102,7 +102,7 @@ module.exports = {
                 userData = req.session?.address_select ?? ""
                 let datenow = Math.floor(new Date().getTime()/1000)
                 await coupon.updateMany({status:"pending",from:{$lte:datenow}},{$set:{status:"enabled"}})
-                await coupon.updateMany({status:"enabled",to:{$lte:datenow}},{$set:{status:"expired"}})
+                await coupon.updateMany({status:{$in:["enabled","disabled"]},to:{$lte:datenow}},{$set:{status:"expired"}})
                 let coupons = await coupon.find().toArray()
                 if(grandTotal <= userBalance){
                     cod = true
@@ -206,9 +206,8 @@ module.exports = {
                     currency: "INR",
                     receipt: uuid
                 };
-                console.log(options);
+            
                 await instance.orders.create(options, function(err, order) {
-                    console.log(order);
                     res.json(order)
                 });
             }
@@ -338,13 +337,12 @@ module.exports = {
                 }
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
     verifyPayment:async (req, res, next)=>{
         try{
-            console.log(req.body)
             let body=req.body['payment[razorpay_order_id]'] + "|" + req.body['payment[razorpay_payment_id]'];
             let expectedSignature = await crypto.createHmac("sha256",process.env.key_secret)
                                     .update(body.toString())
@@ -462,7 +460,7 @@ module.exports = {
                 res.json({failed:true})
             }                 
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -519,7 +517,6 @@ module.exports = {
             let cwcount = await getCwcount(req.session.user_id)
             res.render("order_history",{title:"ORDER HISTORY",data,nofooter:true,cwcount})
         }catch(err){
-            console.log(err);
             next()
         }
     },
@@ -598,7 +595,7 @@ module.exports = {
                 res.json({status:false})
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -689,7 +686,7 @@ module.exports = {
             }
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -720,7 +717,7 @@ module.exports = {
             req.session.discount = null
             res.json({status:true,totalPrice:grandTotal})
         }catch(err){
-            next()
+            res.json({error:true})
         }
     }
 

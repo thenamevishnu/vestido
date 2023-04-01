@@ -160,6 +160,13 @@ function signupValidate(){
             username:username,
             phone:phone
         },function(response){
+            if(response.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }else
             if(response.status){
                 all[6].innerHTML=null
                 document.getElementById("otp-box").style.display="block"
@@ -191,6 +198,13 @@ function signupValidate(){
             phone:phone,
             password:password
         },function(response){
+            if(response.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }else
             if(response.status){
                 all[7].innerHTML="<font color='green'>Email Verified!</font>"
                 setTimeout(()=>{
@@ -446,6 +460,13 @@ function counterPlus(product_id,size,price,index){
         size:size,
         qty:value+1
     },function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response.status){
             document.getElementById(""+product_id+""+size+"showcount").innerHTML = value + 1
             document.getElementById(""+product_id+""+size+"qty").value = value + 1
@@ -482,6 +503,13 @@ function counterMinus(product_id,size,price,index){
         size:size,
         qty:value-1
     },function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response.status){
             document.getElementById(""+product_id+""+size+"qty").value = value-1;
             document.getElementById(""+product_id+""+size+"showcount").innerHTML = value-1
@@ -501,12 +529,12 @@ function counterMinus(product_id,size,price,index){
     return
 }
 
-function purchaseCod(product_id,size){
-    $.post("/success",{
-        product_id:product_id,
-        size:size
-    })
-}
+// function purchaseCod(product_id,size){
+//     $.post("/success",{
+//         product_id:product_id,
+//         size:size
+//     })
+// }
 
 function checkoutForm(){
     const country = document.frm.country.value
@@ -599,6 +627,13 @@ function checkoutForm(){
                 method : "post",
                 data : $("#checkoutForm").serialize(),
                 success : (response)=>{
+                    if(response.error){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        })
+                    }else
                     if(response?.cod){
                         location.href = "/success"
                     }else{
@@ -644,6 +679,13 @@ function verifyPayment(payment,order){
             payment,
             order
         },function(response){
+            if(response.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }else
             if(response.online){
                 window.location = "/success"
             }else{
@@ -671,8 +713,6 @@ function ProfileValidate(){
     let gender = document.frm.gender.value
     const fname_regx = /^[A-Za-z\s+]{5,16}$/gm
     const lname_regx = /^[A-Za-z\s+]{1,16}$/gm
-
-    console.log(first_name,last_name);
 
     let show = document.getElementsByClassName("text-danger")
 
@@ -717,6 +757,12 @@ function changeOrderStataus(status,user_id,order_id){
     },function(response){
         if(response.status){
             location.reload()
+        }else if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
         }else{
             location.reload()
         }
@@ -837,10 +883,17 @@ function applyCoupon(){
         document.getElementById("coupon-err").innerHTML = "<font color='red'>Enter valid coupon!</font>"
         return;
     }
-    console.log(code);
+   
     $.post("/checkCoupon",{
         code : code
     },function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response.status=="not found"){
             document.getElementById("coupon-err").innerHTML = "<font color='red'>Invalid Coupon!</font>"
         }else if(response.status=="expired"){
@@ -870,7 +923,14 @@ function removeCoupon(){
     $.post("/removeCoupon",{
         code:code
     },function(response){
-        document.getElementById("input-coupon").disabled = false
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else{
+            document.getElementById("input-coupon").disabled = false
             document.getElementById("basic-addon2").innerHTML = "Apply"
             document.getElementById("basic-addon2").style.backgroundColor = "#7e19d1"
             document.getElementById("basic-addon2").onclick = applyCoupon;
@@ -878,6 +938,7 @@ function removeCoupon(){
             document.getElementById("grandTotal").innerHTML = "₹"+response.totalPrice
             document.getElementById("disPrice").innerHTML = ""
             document.getElementById("disPriceShow").style.display = "none"
+        }
     })
 }
 
@@ -897,6 +958,14 @@ function rating(rating,product_id){
     $.post("/postRating",{
         rating: rating,
         product_id: product_id
+    },function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }
     })
 }
 
@@ -920,6 +989,13 @@ function reviewForm(product_id){
             message: text,
             product_id: product_id
         },function(response){
+            if(response.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }else
             if(response.status){
                 Swal.fire("Review", "Review Updated", "success", {
                     confirmButtonText: "OK"
@@ -998,6 +1074,13 @@ function contactValidation(){
             subject: subject,
             message: message
         },function(response){
+            if(response.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }else
             if(response.status){
                 Swal.fire("GET IN TOUCH", "We will respond as soon as possible!", "success", {
                     confirmButtonText: "OK"
@@ -1020,6 +1103,14 @@ function sales_report(value){
     },function(response){
         if(response.status){
             location.reload()
+        }else if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else{
+            location.reload()
         }
     })
 }
@@ -1036,6 +1127,13 @@ function returnOrder(order_id){
     $.post("/returnOrder",{
         id:order_id
     },function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response.status){
             document.getElementById("returnOrder1").style.display = "none"
             document.getElementById("returnOrder").style.display = ""

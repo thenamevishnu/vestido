@@ -82,7 +82,7 @@ router.post("/changeShopContents",productController.getShopPost)
 
 router.get("/emailExist",nocache(),userController.emailExist)
 
-router.post("/sendOtp",userController.sendOtp)
+// router.post("/sendOtp",userController.sendOtp)
 
 router.post("/validateOtp",nocache(),userController.validateOtp)
 
@@ -116,7 +116,5 @@ router.post("/verifySignup",userController.verifySignup)
 router.post("/signupOtpCheck",userController.signupOtpCheck)
 
 router.post("/removeCoupon",userAuth.authentication,orderController.removeCoupon)
-
-// router.post("/reviewPagination",productController.reviewPagination)
 
 module.exports = router;

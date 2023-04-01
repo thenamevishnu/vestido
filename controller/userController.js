@@ -94,7 +94,7 @@ module.exports = {
             }
             
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -128,11 +128,11 @@ module.exports = {
                     })
                 req.session.user_id = insertId.insertedId
                 req.session.loggedIn = true
-                console.log(req.session);
+            
                 res.json({status:true})
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -240,7 +240,7 @@ module.exports = {
                 res.json(genratedKey)
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -267,7 +267,7 @@ module.exports = {
             req.session.email = null
             res.json("done")
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -299,7 +299,7 @@ module.exports = {
                 }
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -316,7 +316,7 @@ module.exports = {
                 res.json("notexist")
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -330,24 +330,24 @@ module.exports = {
         }
     },
 
-    sendOtp:async (req, res, next)=>{
-        try{
-            let email = req.body.email
-            let otp = req.body.otp
-            let result = await sendOtp(email,otp)
-            if(result=="sent"){
-                let sentTime = Math.floor(new Date().getTime()/1000)
-                req.session.email = email
-                req.session.otp = otp
-                req.session.sendTime = sentTime
-                res.json(true)
-            }else{
-                res.json(false)
-            }
-        }catch(err){
-            next()
-        }
-    },
+    // sendOtp:async (req, res, next)=>{
+    //     try{
+    //         let email = req.body.email
+    //         let otp = req.body.otp
+    //         let result = await sendOtp(email,otp)
+    //         if(result=="sent"){
+    //             let sentTime = Math.floor(new Date().getTime()/1000)
+    //             req.session.email = email
+    //             req.session.otp = otp
+    //             req.session.sendTime = sentTime
+    //             res.json(true)
+    //         }else{
+    //             res.json(false)
+    //         }
+    //     }catch(err){
+    //         res.json({error:true})
+    //     }
+    // },
 
     about:async (req, res, next)=>{
         try{
@@ -376,7 +376,7 @@ module.exports = {
                 res.json({status:false})
             }   
         }catch(err){
-            next()
+            res.json({error:true})
         }
     }
 }

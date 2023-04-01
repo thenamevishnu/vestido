@@ -60,7 +60,7 @@ module.exports = {
                 })
             }
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -79,7 +79,7 @@ module.exports = {
             })
             res.json({status:true,product_id:product_id})
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -161,7 +161,7 @@ module.exports = {
             req.session.allReview = review
             res.json({status:true})
         }catch(err){
-            next()
+            res.json({error:true})
         }
     }
 }

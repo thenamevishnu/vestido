@@ -537,7 +537,6 @@ module.exports = {
                         const month = d.getMonth() + 1 < 10 ? "0"+(d.getMonth()+1) : (d.getMonth()+1)
                         const day = d.getDate() < 10 ? "0"+d.getDate() : d.getDate()
                         const date = d.getFullYear()+"-"+month+"-"+day
-                        console.log(from, to , date);
                         if(date>=from && date<=to){
                             
                             obj.push(data)
@@ -555,7 +554,7 @@ module.exports = {
             req.session.adminFilter = obj
             res.json({status:true})
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 
@@ -566,7 +565,6 @@ module.exports = {
                     $unwind:"$orders"
                 }
             ]).toArray()
-            console.log(order);
             res.render("admin/orders",{title:"ORDERS",admin:true,header:"ORDERS",logged:true,order})
         }catch(err){
             next()
@@ -638,10 +636,9 @@ module.exports = {
             }else{
                 await orders.updateOne({user_id:new ObjectId(user_id),"orders.id":id},{$set:{"orders.$.status":status}})
             }
-            console.log(data);
             res.json({status:true})
         }catch(err){
-            next()
+            res.json({error:true})
         }
     },
 

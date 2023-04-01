@@ -70,7 +70,7 @@ module.exports = {
                 }
             }   
         }catch(err){
-            next()
+            res.json({error:true})
         } 
     },
 
@@ -81,7 +81,7 @@ module.exports = {
             await users.updateOne({_id:new ObjectId(req.session.user_id)},{$set:{password:encryptPassword}})
             res.json("done")
         }catch(err){
-            next()
+            res.json({error:true})
         }
     }
 

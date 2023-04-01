@@ -96,17 +96,15 @@ module.exports = {
             let sort_order = sort=="latest" ? -1 : sort=="low-high" ? 1 : sort=="high-low" ? -1 : 1
             let size = req.body['size[]'] ? req.body['size[]'] : req.session.size ? req.session.size : []
             let pageMin = req.body.pageMin ? req.body.pageMin : 0
-            let pageMax = req.body.pageMax ? req.body.pageMax : 6
+            let pageMax = 6
             if(!Array.isArray(size) && req.body['size[]']){
                 size = [size]
             }
-            console.log(size);
             if(!Array.isArray(size) || size=="[]" || size?.length==0){
                 showthis=true
             }else{
                 showthis=false
             }
-            console.log(showthis);
             if(sort=="latest"){
                 sortit = { _id:-1 }
             }else{
@@ -167,9 +165,10 @@ module.exports = {
             req.session.min = min
             req.session.max = max
             req.session.filter = min+"-"+max
+           
             res.redirect("/shop")
         }catch(err){
-            next()
+            res.json({error:true})
         }
         
     },

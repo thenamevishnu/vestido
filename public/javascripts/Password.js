@@ -16,6 +16,13 @@ function sendOtp(){
         email:email
     },
     function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response=="notexist"){
             err[0].innerHTML = "Email is not registered with us!"
         }else if(response=="error"){
@@ -45,6 +52,13 @@ function validateOtp(){
         otp:otp
     },
     function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response==false){
             err[1].innerHTML = "Entered otp is incorrect!"
         }else{
@@ -83,6 +97,13 @@ function setNewPassword(){
         password:password
     },
     function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response=="exist"){
             err[0].innerHTML = "Entered password is same as your old password!"
         }else{
@@ -102,6 +123,13 @@ function setNewPassword(){
                 password:password
             },
             function(response){
+                if(response.error){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }else
                 if(response=="done"){
                     err[1].innerHTML = "<i><font color='green'>Your passsword reset successfull!</font></i>"
                     setTimeout(()=>{
@@ -148,6 +176,13 @@ function changePassword(){
         password:current_password
     },
     function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response.status=="invalid"){
             err[0].innerHTML = "Password is incorrect!"
         }else{
@@ -162,6 +197,13 @@ function changePassword(){
             $.get("/change_user_password",{
                 new_password:password
             },function(response){
+                if(response.error){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }else
                 if(response.status=="current"){
                     err[1].innerHTML = "Password is same as your current password!"
                 }else{
@@ -181,6 +223,13 @@ function changePassword(){
                         changed_password:password
                     },
                     function(response){
+                        if(response.error){
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            })
+                        }else
                         if(response=="done"){
                             err[2].innerHTML = "<i><font color='green'>Your passsword changed successfully!</font></i>"
                             setTimeout(()=>{

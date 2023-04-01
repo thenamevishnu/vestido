@@ -64,7 +64,6 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
     $.get("/admins/chartData",function(response){
-        console.log(response)
         let obj = [["MONTH", "PROFIT" , "REVENUE"]]
         let month = ["JAN","FEB","MAR","APR","MAY","JUNE","JUL","AUG","SEP","OCT","NOV","DEC"]
         response.forEach(async (value)=>{

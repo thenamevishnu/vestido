@@ -4,7 +4,15 @@ function sortShop(){
         sortBy:sortBy
     },
     function(res){
-        location.reload()
+        if(res.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else{
+            location.reload()
+        }
     })
 }
 
@@ -17,7 +25,15 @@ function filterPrice(){
         from:min,
         to:max
     },function(response){
-        location.reload()
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else{
+            location.reload()
+        }
     })
 }
 
@@ -25,14 +41,21 @@ function filterCategory(value){
     $.post("/changeShopContents",{
         categoryBy:value
     },function(response){
-        location.reload()
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else{
+            location.reload()
+        }
     })
 }
 
 function filerSize(){
     let sizeDiv = document.getElementById("size")
     let size = sizeDiv.querySelectorAll("input[type='checkbox']")
-    console.log(size);
     i=0
     obj = []
     size.forEach(async (data,index)=>{
@@ -47,7 +70,15 @@ function filerSize(){
     $.post("/changeShopContents",{
         size:obj
     },function(response){
-        location.reload()
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else{
+            location.reload()
+        }
     })
 }
 
@@ -78,15 +109,21 @@ function sendData(e){
 
 function paginationCount(value){
     let skip = ( value - 1 ) * 6
-    let limit = skip + 6
     $.post("/changeShopContents",{
         pageMin : skip,
-        pageMax : limit
     },
     function(res){
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-        location.reload()
+        if(res.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else{
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            location.reload()
+        }
     })
 }
 
@@ -95,21 +132,18 @@ function copyToClipboard(code){
     document.getElementById(""+code+"").innerHTML = "<code class='text-secondary'>Copied <i class='fa fa-check'></i></code>";
 }
 
-function reviewPagination(param){
-    $.post("/reviewPagination",{
-        page:param
-    },function(response){
-        if(response.status){
-            location.reload()
-        }
-    })
-}
-
 function reviews(param,product_id){
     $.post("/reviewsSort",{
         sort : param,
         product_id:product_id
     },function(response){
+        if(response.error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }else
         if(response.status){
             location.reload()
         }
