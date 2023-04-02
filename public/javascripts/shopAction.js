@@ -101,7 +101,7 @@ function sendData(e){
         result.innerHTML = ""
         payload.forEach((item,index) => {
             if(index>=0) result.innerHTML += "<hr>"
-            result.innerHTML += `<a href="/product_details/${item._id}" class="text-decoration-none text-dark"><p class="ms-3"><img width="40px" src="/images/products/${item.thumb}">${item.title}</p></a>`  
+            result.innerHTML += `<a href="/product_details/${item._id}" class="text-decoration-none text-dark"><p class="ms-3"><img width="40px" src="https://res.cloudinary.com/dhya4vcls/image/upload/${item.thumb}">${item.title}</p></a>`  
         });
         return;
     })
